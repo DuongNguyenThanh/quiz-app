@@ -137,10 +137,15 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(LoginActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
+                        if(mAuth.getCurrentUser().isEmailVerified()) {
+                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(LoginActivity.this,
+                                    MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast.makeText(LoginActivity.this, "Please verify your email address", Toast.LENGTH_LONG).show();
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

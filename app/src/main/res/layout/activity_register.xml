@@ -40,9 +40,37 @@
                 android:background="@drawable/custom_edittext"
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
-                android:hint="Username"
+                android:hint="Email"
                 android:textSize="15sp"
                 android:drawableLeft="@drawable/baseline_person_24"
+                android:textColor="@color/black"
+                android:drawablePadding="8dp"
+                />
+
+            <EditText
+                android:id="@+id/fullName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_edittext"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:hint="Name"
+                android:textSize="15sp"
+                android:drawableLeft="@drawable/baseline_info_24"
+                android:textColor="@color/black"
+                android:drawablePadding="8dp"
+                />
+
+            <EditText
+                android:id="@+id/dob"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_edittext"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:hint="Date of birth"
+                android:textSize="15sp"
+                android:drawableLeft="@drawable/baseline_calendar_month_24"
                 android:textColor="@color/black"
                 android:drawablePadding="8dp"
                 />
@@ -62,6 +90,21 @@
                 android:drawablePadding="8dp"
                 />
 
+            <EditText
+                android:id="@+id/confirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/custom_edittext"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:hint="Confirm password"
+                android:textSize="15sp"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:textColor="@color/black"
+                android:drawablePadding="8dp"
+                />
+
             <Button
                 android:id="@+id/registerButton"
                 android:layout_width="match_parent"
@@ -73,15 +116,16 @@
                 app:cornerRadius = "20dp"
                 />
 
-            <Button
-                android:id="@+id/cancelButton"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Cancel"
+            <TextView
+                android:id="@+id/gotoLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:text="@string/already_an_user_login"
+                android:textColor="@color/purple"
                 android:textSize="18sp"
-                android:layout_marginTop="5dp"
-                android:backgroundTint="@color/purple"
-                app:cornerRadius = "20dp"
+                android:textStyle="bold"
                 />
 
         </LinearLayout>

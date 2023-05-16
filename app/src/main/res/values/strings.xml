@@ -10,6 +10,7 @@
     <string name="google_icon">google icon</string>
     <string name="facebook_icon">facebook icon</string>
     <string name="new_user_register_now">New User? Register Now</string>
+    <string name="already_an_user_login">Already an user? Login</string>
     <string name="Register">Register Now</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close navigation Drawer</string>
