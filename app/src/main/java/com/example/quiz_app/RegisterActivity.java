@@ -2,6 +2,7 @@ package com.example.quiz_app;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText txtUsername, txtPassword, txtConfirmPass, txtDob;
     private TextView tvLogin;
     protected FirebaseAuth mAuth;
+    protected ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,10 +43,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         initView();
         mAuth = FirebaseAuth.getInstance();
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Creating new account...");
+
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                register();
+                register(dialog);
             }
         });
 
@@ -73,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void register() {
+    private void register(ProgressDialog progressDialog) {
 
         String EMAIL_PATTERN = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
 
@@ -98,6 +103,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        progressDialog.show();
         mAuth.createUserWithEmailAndPassword(username, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -106,6 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                         mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
+                                progressDialog.dismiss();
                                 if(task.isSuccessful()) {
                                     Toast.makeText(RegisterActivity.this,
                                             "Registered successfully. Please check your gmail for verification.", Toast.LENGTH_SHORT).show();
@@ -122,7 +129,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                                 else {
                                     Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
                                 }
                             }
                         });
