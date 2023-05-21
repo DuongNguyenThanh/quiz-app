@@ -25,7 +25,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,13 +47,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         initView();
         mAuth = FirebaseAuth.getInstance();
+        mUserDAO = new UserDAO(this);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Creating new account...");
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                register(dialog);
+                register(mUserDAO);
             }
         });
 
@@ -83,18 +83,19 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void register(ProgressDialog progressDialog) {
+    private void register(UserDAO userDAO) {
 
         String EMAIL_PATTERN = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String DATE_PATTERN = "^[0-9]{1,2}\\/[0-9]{1,2}\\/[0-9]{4}$";
 
         String email = txtEmail.getText().toString();
         String username = txtUsername.getText().toString();
-        String sDob = txtDob.getText().toString();
+        String dob = txtDob.getText().toString();
         String password = txtPassword.getText().toString();
         String confirmPassword = txtConfirmPass.getText().toString();
 
         if(TextUtils.isEmpty(email)) {
-            Toast.makeText(RegisterActivity.this, "Username is required!", Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this, "Email is required!", Toast.LENGTH_LONG).show();
             return;
         }
         if(TextUtils.isEmpty(password)) {
@@ -105,12 +106,24 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Please fill in your right email!", Toast.LENGTH_LONG).show();
             return;
         }
+        if(TextUtils.isEmpty(username)) {
+            Toast.makeText(RegisterActivity.this, "Name is required!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(TextUtils.isEmpty(dob)) {
+            Toast.makeText(RegisterActivity.this, "Date of birth is required!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!Pattern.matches(DATE_PATTERN, dob)) {
+            Toast.makeText(RegisterActivity.this, "Your date of birth must be day/month/year!", Toast.LENGTH_LONG).show();
+            return;
+        }
         if(!confirmPassword.equals(password)) {
             Toast.makeText(RegisterActivity.this, "Confirm password doesn't match", Toast.LENGTH_LONG).show();
             return;
         }
 
-        progressDialog.show();
+        dialog.show();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
@@ -119,18 +132,12 @@ public class RegisterActivity extends AppCompatActivity {
                         mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                progressDialog.dismiss();
+                                dialog.dismiss();
                                 if(task.isSuccessful()) {
 
                                     String uId = authResult.getUser().getUid();
-                                    Date dateDob = new Date();
-                                    try {
-                                        dateDob = new SimpleDateFormat("dd/MM/yyyy").parse(sDob);
-                                    }catch(Exception ex) {
-
-                                    }
-                                    User user = new User(username, dateDob, uId);
-                                    mUserDAO.addUser(user);
+                                    User user = new User(username, dob, uId);
+                                    userDAO.addUser(user);
 
                                     Toast.makeText(RegisterActivity.this,
                                             "Registered successfully. Please check your gmail for verification.", Toast.LENGTH_SHORT).show();
@@ -139,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     // pass data into intent
                                     data.putExtra("email", email);
-                                    data.putExtra("pass", password);
+                                    data.putExtra("password", password);
 
                                     // set resultCode is Activity.RESULT_OK
                                     setResult(Activity.RESULT_OK, data);

@@ -2,6 +2,7 @@ package com.example.quiz_app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtUsername, txtPassword;
     private TextView tvResetPass, tvRegister;
     protected FirebaseAuth mAuth;
+    protected ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
         initView();
         mAuth = FirebaseAuth.getInstance();
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Logging in...");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
         if(requestCode == REQUEST_CODE_REGISTER) {
             if(resultCode == Activity.RESULT_OK) {
                 // take data from Intent
-                final String username = data.getStringExtra("username");
+                final String username = data.getStringExtra("email");
                 final String password = data.getStringExtra("password");
 
                 //Set back data for txtEmail and password
@@ -133,10 +137,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        dialog.show();
         mAuth.signInWithEmailAndPassword(username, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        dialog.dismiss();
                         if(mAuth.getCurrentUser().isEmailVerified()) {
                             Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(LoginActivity.this,

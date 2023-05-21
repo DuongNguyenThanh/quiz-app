@@ -29,25 +29,25 @@ public class UserDAO {
         open();
         ContentValues values = new ContentValues();
         values.put("name", user.getName());
+        values.put("dob", user.getDob());
         values.put("account_id", user.getAccountId());
 
         db.insert(SQLiteHelper.TABLE_USER, null, values);
         close();
     }
 
-//    public void updateBook(Book book) {
-//        open();
-//        ContentValues values = new ContentValues();
-//        values.put(SQLiteHelper.COLUMN_NAME, book.getName());
-//        values.put(SQLiteHelper.COLUMN_AUTHOR, book.getAuthor());
-//        values.put(SQLiteHelper.COLUMN_RELEASE_DATE, book.getReleaseDate());
-//        values.put(SQLiteHelper.COLUMN_PUBLISHER, book.getPublisher());
-//        values.put(SQLiteHelper.COLUMN_PRICE, book.getPrice());
-//
-//        db.update(SQLiteHelper.TABLE_NAME, values, SQLiteHelper.COLUMN_ID + " = ?",
-//                new String[]{String.valueOf(book.getId())});
-//        close();
-//    }
+    public boolean updateUser(User user) {
+        open();
+        ContentValues values = new ContentValues();
+        values.put("name", user.getName());
+        values.put("dob", user.getDob());
+
+        int rowsAffected = db.update(SQLiteHelper.TABLE_USER, values, "id = ?",
+                new String[]{String.valueOf(user.getId())});
+        close();
+
+        return rowsAffected > 0;
+    }
 
     public User getUserByAccountId(String accountId) {
 
@@ -64,6 +64,7 @@ public class UserDAO {
             do {
                 user.setId(cursor.getInt(0));
                 user.setName(cursor.getString(1));
+                user.setDob(cursor.getString(2));
             } while (cursor.moveToNext());
         }
         cursor.close();

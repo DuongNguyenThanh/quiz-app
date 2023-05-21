@@ -1,5 +1,7 @@
 package com.example.quiz_app.model;
 
+import java.io.Serializable;
+
 public class BaseModel {
 
     private Integer id;

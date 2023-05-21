@@ -26,4 +26,26 @@
         android:gravity="center"
         />
 
+    <TextView
+        android:id="@+id/dob"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:text="Date of birth"
+        android:textSize="20sp"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/editProfile"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:text="@string/edit_profile"
+        android:textSize="18sp"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "20dp"
+        />
+
 </LinearLayout>
