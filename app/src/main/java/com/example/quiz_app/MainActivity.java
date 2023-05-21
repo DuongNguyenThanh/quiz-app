@@ -39,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
                     case 0:
                         navigationView.getMenu().findItem(R.id.mHome).setChecked(true);
                         break;
+                    case 1:
+                        navigationView.getMenu().findItem(R.id.mSearch).setChecked(true);
+                        break;
+                    case 2:
+                        navigationView.getMenu().findItem(R.id.mActicity).setChecked(true);
+                        break;
                     case 3:
                         navigationView.getMenu().findItem(R.id.mProfile).setChecked(true);
                         break;
@@ -57,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.mHome:
                         viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.mSearch:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.mActicity:
+                        viewPager.setCurrentItem(2);
                         break;
                     case R.id.mProfile:
                         viewPager.setCurrentItem(3);

@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 public class EditUserActivity extends AppCompatActivity {
 
-    private Button btnSaveUser, btnCancel, changeAvt;
+    private Button btnSaveUser, btnCancel;
     private EditText txtUsername, txtDob;
     private User user;
     private UserDAO mUserDAO;
@@ -99,7 +99,6 @@ public class EditUserActivity extends AppCompatActivity {
 
         btnSaveUser = findViewById(R.id.saveUser);
         btnCancel = findViewById(R.id.cancel);
-        changeAvt = findViewById(R.id.changeAvt);
         txtUsername = findViewById(R.id.fullName);
         txtDob = findViewById(R.id.dob);
     }

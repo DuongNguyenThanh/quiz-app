@@ -11,13 +11,14 @@ import androidx.fragment.app.Fragment;
 
 import com.example.quiz_app.R;
 
-public class HomeFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         return view;
     }
+
 }
