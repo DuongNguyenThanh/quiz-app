@@ -2,7 +2,7 @@ package com.example.quiz_app.model;
 
 import java.io.Serializable;
 
-public class BaseModel {
+public class BaseModel implements Serializable {
 
     private Integer id;
 

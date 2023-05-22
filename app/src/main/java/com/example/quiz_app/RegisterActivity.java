@@ -94,16 +94,13 @@ public class RegisterActivity extends AppCompatActivity {
         String password = txtPassword.getText().toString();
         String confirmPassword = txtConfirmPass.getText().toString();
 
+        // Information is required
         if(TextUtils.isEmpty(email)) {
             Toast.makeText(RegisterActivity.this, "Email is required!", Toast.LENGTH_LONG).show();
             return;
         }
         if(TextUtils.isEmpty(password)) {
             Toast.makeText(RegisterActivity.this, "Password is required!", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if(!Pattern.matches(EMAIL_PATTERN, email)) {
-            Toast.makeText(RegisterActivity.this, "Please fill in your right email!", Toast.LENGTH_LONG).show();
             return;
         }
         if(TextUtils.isEmpty(username)) {
@@ -114,8 +111,23 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Date of birth is required!", Toast.LENGTH_LONG).show();
             return;
         }
+
+        // Validation information
+        if(!Pattern.matches(EMAIL_PATTERN, email)) {
+            Toast.makeText(RegisterActivity.this, "Please fill in your right email!", Toast.LENGTH_LONG).show();
+            return;
+        }
         if(!Pattern.matches(DATE_PATTERN, dob)) {
             Toast.makeText(RegisterActivity.this, "Your date of birth must be day/month/year!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(password.length() < 6) {
+            Toast.makeText(RegisterActivity.this, "Password must have at least 6 characters", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(password.contains(" ") || password.contains("=") || password.contains("*") || password.contains(".")
+                || password.contains(",")) {
+            Toast.makeText(RegisterActivity.this, "Password must not have space, =, *, comma, dots", Toast.LENGTH_LONG).show();
             return;
         }
         if(!confirmPassword.equals(password)) {
@@ -163,6 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
                         Toast.makeText(RegisterActivity.this, "Email exist", Toast.LENGTH_LONG).show();
                     }
                 });

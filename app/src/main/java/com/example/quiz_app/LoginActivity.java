@@ -157,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
                         Toast.makeText(LoginActivity.this,
                                 "Login Failed", Toast.LENGTH_SHORT).show();
                     }

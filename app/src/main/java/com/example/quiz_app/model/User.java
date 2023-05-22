@@ -2,7 +2,7 @@ package com.example.quiz_app.model;
 
 import java.io.Serializable;
 
-public class User extends BaseModel implements Serializable {
+public class User extends BaseModel {
 
     private String name, dob;
     private String accountId;

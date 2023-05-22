@@ -35,7 +35,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         String tableCategory = "CREATE TABLE " + TABLE_CATEGORY +  " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name TEXT " +
+                "name TEXT, " +
+                "img_resource TEXT " +
                 ")";
 
         String tableLo = "CREATE TABLE " + TABLE_LEARNING_OBJECT + " (" +

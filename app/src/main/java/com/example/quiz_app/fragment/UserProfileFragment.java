@@ -47,7 +47,7 @@ public class UserProfileFragment extends Fragment {
         editUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), EditUserActivity.class);
+                Intent intent = new Intent(getActivity(), EditUserActivity.class);
                 intent.putExtra("user", user);
                 intent.putExtra("user-id", user.getId());
                 startActivityForResult(intent, REQUEST_CODE_UPDATE);
