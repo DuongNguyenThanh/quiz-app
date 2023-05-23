@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/createLOTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="   Create a quiz lesson"
+        android:textSize="20sp"
+        android:textColor="@color/purple"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:drawableStartCompat="@drawable/icon_create_quiz" />
+
+    <TextView
+        android:id="@+id/firstHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1. Quiz lesson name"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/purple"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createLOTitle"
+        />
+
+    <EditText
+        android:id="@+id/quizNameTxt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/custom_edittext_v2"
+        android:padding="8dp"
+        android:hint="Enter quiz lesson name"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstHeader"
+        />
+
+    <TextView
+        android:id="@+id/secondHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2. Choose category"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/purple"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quizNameTxt"
+        />
+
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/secondHeader"
+        />
+
+    <TextView
+        android:id="@+id/thirdHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3. Choose avatar"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/purple"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categorySpinner"
+        />
+
+    <Button
+        android:id="@+id/btnChooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="center_vertical"
+        android:text="Choose image"
+        android:textSize="12sp"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "10dp"
+        app:layout_constraintTop_toBottomOf="@id/categorySpinner"
+        app:layout_constraintStart_toEndOf="@id/thirdHeader"
+        />
+
+    <ImageView
+        android:id="@+id/avtImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/avt_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thirdHeader"
+        />
+
+    <TextView
+        android:id="@+id/fourthHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4. Add your quiz"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/purple"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/avtImage"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddQuiz"
+        />
+
+    <Button
+        android:id="@+id/btnAddQuiz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_gravity="center_vertical"
+        android:text="Add a quiz"
+        android:textSize="12sp"
+        android:drawableLeft="@drawable/baseline_add_24"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "10dp"
+        app:layout_constraintTop_toBottomOf="@id/avtImage"
+        app:layout_constraintStart_toEndOf="@id/fourthHeader"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/quizRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAddQuiz"
+        app:layout_constraintBottom_toTopOf="@+id/cancelCreateLO"
+        />
+
+    <Button
+        android:id="@+id/cancelCreateLO"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="cancel"
+        android:textSize="18sp"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/saveLO"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="save"
+        android:textSize="18sp"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your quiz question here..."
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            />
+
+        <Button
+            android:id="@+id/btnAddQuiz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="right"
+            android:text="Add an answer"
+            android:textSize="12sp"
+            android:drawableLeft="@drawable/baseline_add_24"
+            android:backgroundTint="@color/purple"
+            app:cornerRadius = "10dp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/quizRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -148,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 if(task.isSuccessful()) {
 
                                     String uId = authResult.getUser().getUid();
-                                    User user = new User(username, dob, uId);
+                                    User user = new User(username, dob, uId, 0, 0);
                                     userDAO.addUser(user);
 
                                     Toast.makeText(RegisterActivity.this,

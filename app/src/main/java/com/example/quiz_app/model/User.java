@@ -4,23 +4,27 @@ import java.io.Serializable;
 
 public class User extends BaseModel {
 
-    private String name, dob;
-    private String accountId;
+    private String name, dob, accountId;
+    private Integer exp, imageId;
 
     public User() {
     }
 
-    public User(String name, String dob, String accountId) {
+    public User(String name, String dob, String accountId, Integer exp, Integer imageId) {
         this.name = name;
         this.dob = dob;
         this.accountId = accountId;
+        this.exp = exp;
+        this.imageId = imageId;
     }
 
-    public User(Integer id, String name, String dob, String accountId) {
+    public User(Integer id, String name, String dob, String accountId, Integer exp, Integer imageId) {
         super(id);
         this.name = name;
         this.dob = dob;
         this.accountId = accountId;
+        this.exp = exp;
+        this.imageId = imageId;
     }
 
     public String getName() {
@@ -45,5 +49,21 @@ public class User extends BaseModel {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public Integer getExp() {
+        return exp;
+    }
+
+    public void setExp(Integer exp) {
+        this.exp = exp;
+    }
+
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
     }
 }

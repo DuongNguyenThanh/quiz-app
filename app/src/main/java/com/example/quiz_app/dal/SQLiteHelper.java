@@ -11,6 +11,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "quiz.db";
     public static final int DATABASE_VERSION = 1;
 
+    public static final String TABLE_IMAGE = "image";
     public static final String TABLE_USER = "user";
     public static final String TABLE_USER_LO = "user_lo";
     public static final String TABLE_LEARNING_OBJECT = "learning_object";
@@ -26,11 +27,20 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         //Create table
+        String tableImage = "CREATE TABLE " + TABLE_IMAGE + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "src TEXT, " +
+                "type TEXT " +
+                ")";
+
         String tableUser = "CREATE TABLE " + TABLE_USER + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT, " +
                 "dob TEXT, " +
-                "account_id TEXT NOT NULL" +
+                "exp INTEGER, " +
+                "account_id TEXT NOT NULL, " +
+                "image_id INTEGER, " +
+                "FOREIGN KEY('image_id') REFERENCES " + TABLE_IMAGE + "('id') " +
                 ")";
 
         String tableCategory = "CREATE TABLE " + TABLE_CATEGORY +  " (" +
@@ -42,9 +52,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String tableLo = "CREATE TABLE " + TABLE_LEARNING_OBJECT + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "title TEXT, " +
-                "avatar TEXT, " +
                 "category_id TEXT, " +
-                "FOREIGN KEY('category_id') REFERENCES " + TABLE_CATEGORY + "('id') " +
+                "image_id INTEGER, " +
+                "FOREIGN KEY('category_id') REFERENCES " + TABLE_CATEGORY + "('id'), " +
+                "FOREIGN KEY('image_id') REFERENCES " + TABLE_IMAGE + "('id') " +
                 ")";
 
         String tableUserLo = "CREATE TABLE " + TABLE_USER_LO + " (" +
@@ -72,6 +83,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY('quiz_id') REFERENCES " + TABLE_QUIZ + "('id') " +
                 ")";
 
+        sqLiteDatabase.execSQL(tableImage);
         sqLiteDatabase.execSQL(tableUser);
         sqLiteDatabase.execSQL(tableCategory);
         sqLiteDatabase.execSQL(tableLo);
@@ -84,6 +96,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
         //Drop existing table
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_LEARNING_OBJECT);

@@ -31,6 +31,8 @@ public class UserDAO {
         values.put("name", user.getName());
         values.put("dob", user.getDob());
         values.put("account_id", user.getAccountId());
+        values.put("exp", user.getExp());
+        values.put("image_id", user.getImageId());
 
         db.insert(SQLiteHelper.TABLE_USER, null, values);
         close();
@@ -41,6 +43,7 @@ public class UserDAO {
         ContentValues values = new ContentValues();
         values.put("name", user.getName());
         values.put("dob", user.getDob());
+        values.put("image_id", user.getImageId());
 
         int rowsAffected = db.update(SQLiteHelper.TABLE_USER, values, "id = ?",
                 new String[]{String.valueOf(user.getId())});
@@ -65,6 +68,8 @@ public class UserDAO {
                 user.setId(cursor.getInt(0));
                 user.setName(cursor.getString(1));
                 user.setDob(cursor.getString(2));
+                user.setExp(cursor.getInt(3));
+                user.setImageId(cursor.getInt(5));
             } while (cursor.moveToNext());
         }
         cursor.close();

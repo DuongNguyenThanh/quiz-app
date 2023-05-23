@@ -31,7 +31,6 @@ public class EditUserActivity extends AppCompatActivity {
 
         initView();
         mUserDAO = new UserDAO(this);
-        Intent intent = new Intent();
 
         Integer uId = getIntent().getIntExtra("user-id", 0);
         user = (User) getIntent().getSerializableExtra("user");
