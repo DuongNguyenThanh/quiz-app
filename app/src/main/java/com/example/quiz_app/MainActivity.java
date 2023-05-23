@@ -10,11 +10,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.quiz_app.adapter.ViewPageAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView navigationView;
     private ViewPager viewPager;
+    protected FirebaseAuth mFirebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,5 +79,12 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        String userOrder = getIntent().getStringExtra("sign-out");
+        if (userOrder!= null && userOrder.equals("true")) {
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseAuth.signOut();
+            finish();
+        }
     }
 }

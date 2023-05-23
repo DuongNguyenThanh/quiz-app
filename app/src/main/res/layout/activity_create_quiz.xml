@@ -31,7 +31,7 @@
     <EditText
         android:id="@+id/editQuizQuestion"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:background="@drawable/custom_edittext_v2"
         android:hint="Enter your quiz question here..."
         android:gravity="center"
@@ -43,37 +43,111 @@
         app:layout_constraintTop_toBottomOf="@id/createQuizTitle"
         />
 
-    <Button
-        android:id="@+id/btnAddAnswer"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/answerTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="5dp"
-        android:text="Add an answer"
-        android:textSize="12sp"
-        android:drawableLeft="@drawable/baseline_add_24"
-        android:backgroundTint="@color/purple"
-        app:cornerRadius = "10dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Answer: "
+        android:textSize="20sp"
+        android:textColor="@color/purple"
+        android:padding="10dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editQuizQuestion"
         />
 
     <RadioGroup
-        android:layout_width="match_parent"
+        android:id="@+id/optionAnswers"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="-10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnAddAnswer"
-        app:layout_constraintBottom_toTopOf="@+id/cancelCreateQuiz">
+        app:layout_constraintTop_toBottomOf="@id/answerTitle"
+        app:layout_constraintBottom_toTopOf="@+id/cancelCreateQuiz"
+        app:layout_constraintEnd_toStartOf="@+id/editAnswers">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/quizRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             />
     </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/editAnswers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerTitle"
+        app:layout_constraintStart_toEndOf="@id/optionAnswers">
+
+        <EditText
+            android:id="@+id/editAnswerA"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your answer here..."
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/editAnswerB"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your answer here..."
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/editAnswerC"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your answer here..."
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/editAnswerD"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your answer here..."
+            android:gravity="center"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
 
     <Button
         android:id="@+id/cancelCreateQuiz"
