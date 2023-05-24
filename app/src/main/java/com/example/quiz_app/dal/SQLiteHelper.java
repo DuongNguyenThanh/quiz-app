@@ -8,9 +8,10 @@ import androidx.annotation.Nullable;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "quiz_db";
+    public static final String DATABASE_NAME = "quiz.db";
     public static final int DATABASE_VERSION = 1;
 
+    public static final String TABLE_IMAGE = "image";
     public static final String TABLE_USER = "user";
     public static final String TABLE_USER_LO = "user_lo";
     public static final String TABLE_LEARNING_OBJECT = "learning_object";
@@ -26,51 +27,63 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         //Create table
-        String tableUser = "CREATE TABLE " + TABLE_USER + "(" +
-                "id INT PRIMARY KEY AUTOINCREMENT, " +
-                "name VARCHAR(256), " +
-                "dob DATE, " +
-                "account_id VARCHAR(256) NOT NULL" +
+        String tableImage = "CREATE TABLE " + TABLE_IMAGE + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "src TEXT, " +
+                "type TEXT " +
                 ")";
 
-        String tableCategory = "CREATE TABLE " + TABLE_CATEGORY + "(" +
-                "id INT PRIMARY KEY AUTOINCREMENT, " +
-                "name VARCHAR(256) " +
+        String tableUser = "CREATE TABLE " + TABLE_USER + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "name TEXT, " +
+                "dob TEXT, " +
+                "exp INTEGER, " +
+                "account_id TEXT NOT NULL, " +
+                "image_id INTEGER, " +
+                "FOREIGN KEY('image_id') REFERENCES " + TABLE_IMAGE + "('id') " +
                 ")";
 
-        String tableLo = "CREATE TABLE " + TABLE_LEARNING_OBJECT + "(" +
-                "id INT PRIMARY KEY AUTOINCREMENT, " +
-                "title VARCHAR(256), " +
-                "avatar VARCHAR(256), " +
-                "category_id VARCHAR(256), " +
-                "FOREIGN KEY('category_id') REFERENCES " + TABLE_CATEGORY + "('id') " +
+        String tableCategory = "CREATE TABLE " + TABLE_CATEGORY +  " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "name TEXT, " +
+                "img_resource TEXT " +
                 ")";
 
-        String tableUserLo = "CREATE TABLE " + TABLE_USER_LO + "(" +
-                "id INT PRIMARY KEY AUTOINCREMENT, " +
-                "current_exp INT, " +
-                "lo_id INT, " +
-                "user_id INT, " +
+        String tableLo = "CREATE TABLE " + TABLE_LEARNING_OBJECT + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "title TEXT, " +
+                "category_id TEXT, " +
+                "image_id INTEGER, " +
+                "FOREIGN KEY('category_id') REFERENCES " + TABLE_CATEGORY + "('id'), " +
+                "FOREIGN KEY('image_id') REFERENCES " + TABLE_IMAGE + "('id') " +
+                ")";
+
+        String tableUserLo = "CREATE TABLE " + TABLE_USER_LO + " (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "current_exp INTEGER, " +
+                "lo_id INTEGER, " +
+                "user_id INTEGER, " +
                 "FOREIGN KEY('lo_id') REFERENCES " + TABLE_LEARNING_OBJECT + "('id'), " +
                 "FOREIGN KEY('user_id') REFERENCES " + TABLE_USER + "('id') " +
                 ")";
 
         String tableQuiz = "CREATE TABLE " + TABLE_QUIZ + "(" +
-                "id INT PRIMARY KEY AUTOINCREMENT, " +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "quiz_question TEXT, " +
-                "exp INT, " +
-                "lo_id INT, " +
+                "exp INTEGER, " +
+                "lo_id INTEGER, " +
                 "FOREIGN KEY('lo_id') REFERENCES " + TABLE_LEARNING_OBJECT + "('id') " +
                 ")";
 
         String tableAnswer = "CREATE TABLE " + TABLE_ANSWER + "(" +
-                "id INT PRIMARY KEY AUTOINCREMENT, " +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "content TEXT, " +
-                "is_true BOOLEAN, " +
-                "quiz_id INT, " +
+                "is_true INTEGER, " +
+                "quiz_id INTEGER, " +
                 "FOREIGN KEY('quiz_id') REFERENCES " + TABLE_QUIZ + "('id') " +
                 ")";
 
+        sqLiteDatabase.execSQL(tableImage);
         sqLiteDatabase.execSQL(tableUser);
         sqLiteDatabase.execSQL(tableCategory);
         sqLiteDatabase.execSQL(tableLo);
@@ -83,6 +96,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
         //Drop existing table
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGE);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_CATEGORY);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_LEARNING_OBJECT);
@@ -91,8 +105,4 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ANSWER);
         onCreate(sqLiteDatabase);
     }
-
-    //Create insert method
-
-    //Create getUserProfile Method
 }

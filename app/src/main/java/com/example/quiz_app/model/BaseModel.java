@@ -1,6 +1,8 @@
 package com.example.quiz_app.model;
 
-public class BaseModel {
+import java.io.Serializable;
+
+public class BaseModel implements Serializable {
 
     private Integer id;
 

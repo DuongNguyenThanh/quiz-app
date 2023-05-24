@@ -2,6 +2,7 @@ package com.example.quiz_app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -26,9 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     private final static int REQUEST_CODE_REGISTER = 10000;
 
     private Button btnLogin;
-    private EditText txtUsername, txtPassword;
+    private EditText txtEmail, txtPassword;
     private TextView tvResetPass, tvRegister;
     protected FirebaseAuth mAuth;
+    protected ProgressDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
 
         initView();
         mAuth = FirebaseAuth.getInstance();
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Logging in...");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,11 +70,11 @@ public class LoginActivity extends AppCompatActivity {
         if(requestCode == REQUEST_CODE_REGISTER) {
             if(resultCode == Activity.RESULT_OK) {
                 // take data from Intent
-                final String username = data.getStringExtra("username");
+                final String email = data.getStringExtra("email");
                 final String password = data.getStringExtra("password");
 
                 //Set back data for txtEmail and password
-                txtUsername.setText(username);
+                txtEmail.setText(email);
                 txtPassword.setText(password);
             } else {
                 // DetailActivity fail
@@ -121,11 +127,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login() {
 
-        String username = txtUsername.getText().toString();
+        String email = txtEmail.getText().toString();
         String password = txtPassword.getText().toString();
 
-        if(TextUtils.isEmpty(username)) {
-            Toast.makeText(LoginActivity.this, "Username is required", Toast.LENGTH_LONG).show();
+        if(TextUtils.isEmpty(email)) {
+            Toast.makeText(LoginActivity.this, "Email is required", Toast.LENGTH_LONG).show();
             return;
         }
         if(TextUtils.isEmpty(password)) {
@@ -133,10 +139,12 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        mAuth.signInWithEmailAndPassword(username, password)
+        dialog.show();
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
+                        dialog.dismiss();
                         if(mAuth.getCurrentUser().isEmailVerified()) {
                             Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(LoginActivity.this,
@@ -151,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
                         Toast.makeText(LoginActivity.this,
                                 "Login Failed", Toast.LENGTH_SHORT).show();
                     }
@@ -160,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initView() {
 
         btnLogin = findViewById(R.id.loginButton);
-        txtUsername = findViewById(R.id.username);
+        txtEmail = findViewById(R.id.email);
         txtPassword = findViewById(R.id.password);
         tvResetPass = findViewById(R.id.forgotPassword);
         tvRegister = findViewById(R.id.gotoRegister);

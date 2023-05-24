@@ -1,27 +1,30 @@
 package com.example.quiz_app.model;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
 
 public class User extends BaseModel {
 
-    private String name;
-    private Timestamp dob;
-    private String accountId;
+    private String name, dob, accountId;
+    private Integer exp, imageId;
 
     public User() {
     }
 
-    public User(String name, Timestamp dob, String accountId) {
+    public User(String name, String dob, String accountId, Integer exp, Integer imageId) {
         this.name = name;
         this.dob = dob;
         this.accountId = accountId;
+        this.exp = exp;
+        this.imageId = imageId;
     }
 
-    public User(Integer id, String name, Timestamp dob, String accountId) {
+    public User(Integer id, String name, String dob, String accountId, Integer exp, Integer imageId) {
         super(id);
         this.name = name;
         this.dob = dob;
         this.accountId = accountId;
+        this.exp = exp;
+        this.imageId = imageId;
     }
 
     public String getName() {
@@ -32,11 +35,11 @@ public class User extends BaseModel {
         this.name = name;
     }
 
-    public Timestamp getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Timestamp dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
@@ -46,5 +49,21 @@ public class User extends BaseModel {
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public Integer getExp() {
+        return exp;
+    }
+
+    public void setExp(Integer exp) {
+        this.exp = exp;
+    }
+
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
     }
 }

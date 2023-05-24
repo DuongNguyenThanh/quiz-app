@@ -17,22 +17,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.quiz_app.dal.UserDAO;
+import com.example.quiz_app.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private Button btnRegister;
-    private EditText txtUsername, txtPassword, txtConfirmPass, txtDob;
+    private EditText txtEmail, txtUsername, txtPassword, txtConfirmPass, txtDob;
     private TextView tvLogin;
+    private UserDAO mUserDAO;
     protected FirebaseAuth mAuth;
     protected ProgressDialog dialog;
 
@@ -43,13 +47,14 @@ public class RegisterActivity extends AppCompatActivity {
 
         initView();
         mAuth = FirebaseAuth.getInstance();
+        mUserDAO = new UserDAO(this);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Creating new account...");
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                register(dialog);
+                register(mUserDAO);
             }
         });
 
@@ -78,24 +83,51 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void register(ProgressDialog progressDialog) {
+    private void register(UserDAO userDAO) {
 
         String EMAIL_PATTERN = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String DATE_PATTERN = "^[0-9]{1,2}\\/[0-9]{1,2}\\/[0-9]{4}$";
 
+        String email = txtEmail.getText().toString();
         String username = txtUsername.getText().toString();
+        String dob = txtDob.getText().toString();
         String password = txtPassword.getText().toString();
         String confirmPassword = txtConfirmPass.getText().toString();
 
-        if(TextUtils.isEmpty(username)) {
-            Toast.makeText(RegisterActivity.this, "Username is required!", Toast.LENGTH_LONG).show();
+        // Information is required
+        if(TextUtils.isEmpty(email)) {
+            Toast.makeText(RegisterActivity.this, "Email is required!", Toast.LENGTH_LONG).show();
             return;
         }
         if(TextUtils.isEmpty(password)) {
             Toast.makeText(RegisterActivity.this, "Password is required!", Toast.LENGTH_LONG).show();
             return;
         }
-        if(!Pattern.matches(EMAIL_PATTERN, username)) {
+        if(TextUtils.isEmpty(username)) {
+            Toast.makeText(RegisterActivity.this, "Name is required!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(TextUtils.isEmpty(dob)) {
+            Toast.makeText(RegisterActivity.this, "Date of birth is required!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Validation information
+        if(!Pattern.matches(EMAIL_PATTERN, email)) {
             Toast.makeText(RegisterActivity.this, "Please fill in your right email!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(!Pattern.matches(DATE_PATTERN, dob)) {
+            Toast.makeText(RegisterActivity.this, "Your date of birth must be day/month/year!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(password.length() < 6) {
+            Toast.makeText(RegisterActivity.this, "Password must have at least 6 characters", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if(password.contains(" ") || password.contains("=") || password.contains("*") || password.contains(".")
+                || password.contains(",")) {
+            Toast.makeText(RegisterActivity.this, "Password must not have space, =, *, comma, dots", Toast.LENGTH_LONG).show();
             return;
         }
         if(!confirmPassword.equals(password)) {
@@ -103,8 +135,8 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        progressDialog.show();
-        mAuth.createUserWithEmailAndPassword(username, password)
+        dialog.show();
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
@@ -112,16 +144,21 @@ public class RegisterActivity extends AppCompatActivity {
                         mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                progressDialog.dismiss();
+                                dialog.dismiss();
                                 if(task.isSuccessful()) {
+
+                                    String uId = authResult.getUser().getUid();
+                                    User user = new User(username, dob, uId, 0, 0);
+                                    userDAO.addUser(user);
+
                                     Toast.makeText(RegisterActivity.this,
                                             "Registered successfully. Please check your gmail for verification.", Toast.LENGTH_SHORT).show();
 
                                     final Intent data = new Intent();
 
                                     // pass data into intent
-                                    data.putExtra("email", username);
-                                    data.putExtra("pass", password);
+                                    data.putExtra("email", email);
+                                    data.putExtra("password", password);
 
                                     // set resultCode is Activity.RESULT_OK
                                     setResult(Activity.RESULT_OK, data);
@@ -138,6 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        dialog.dismiss();
                         Toast.makeText(RegisterActivity.this, "Email exist", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -146,7 +184,8 @@ public class RegisterActivity extends AppCompatActivity {
     private void initView() {
         btnRegister = findViewById(R.id.registerButton);
         tvLogin = findViewById(R.id.gotoLogin);
-        txtUsername = findViewById(R.id.username);
+        txtEmail = findViewById(R.id.username);
+        txtUsername = findViewById(R.id.fullName);
         txtPassword = findViewById(R.id.password);
         txtConfirmPass = findViewById(R.id.confirmPassword);
         txtDob = findViewById(R.id.dob);

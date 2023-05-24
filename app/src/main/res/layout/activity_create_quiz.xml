@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/createQuizTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Multi choice"
+        android:textSize="20sp"
+        android:textColor="@color/purple"
+        android:padding="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/timeSpinner"
+        />
+
+    <Spinner
+        android:id="@+id/timeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/createQuizTitle"
+        />
+
+    <EditText
+        android:id="@+id/editQuizQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/custom_edittext_v2"
+        android:hint="Enter your quiz question here..."
+        android:gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createQuizTitle"
+        />
+
+    <TextView
+        android:id="@+id/answerTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Answer: "
+        android:textSize="20sp"
+        android:textColor="@color/purple"
+        android:padding="10dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editQuizQuestion"
+        />
+
+    <RadioGroup
+        android:id="@+id/optionAnswers"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="-10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerTitle"
+        app:layout_constraintBottom_toTopOf="@+id/cancelCreateQuiz"
+        app:layout_constraintEnd_toStartOf="@+id/editAnswers">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/editAnswers"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/answerTitle"
+        app:layout_constraintStart_toEndOf="@id/optionAnswers">
+
+        <EditText
+            android:id="@+id/editAnswerA"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your answer here..."
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/editAnswerB"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your answer here..."
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/editAnswerC"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your answer here..."
+            android:gravity="center"
+            android:layout_marginBottom="15dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+
+        <EditText
+            android:id="@+id/editAnswerD"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/custom_edittext_v2"
+            android:hint="Enter your answer here..."
+            android:gravity="center"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cancelCreateQuiz"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="cancel"
+        android:textSize="18sp"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/saveQuiz"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:text="save"
+        android:textSize="18sp"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
