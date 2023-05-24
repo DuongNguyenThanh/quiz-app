@@ -1,24 +1,29 @@
 package com.example.quiz_app.model;
 
+import java.util.List;
+
 public class Quiz extends BaseModel {
 
     private String quizQuestion;
     private Integer exp, loId;
+    private List<Answer> answers;
 
     public Quiz() {
     }
 
-    public Quiz(String quizQuestion, Integer exp, Integer loId) {
+    public Quiz(String quizQuestion, Integer exp, Integer loId, List<Answer> answers) {
         this.quizQuestion = quizQuestion;
         this.exp = exp;
         this.loId = loId;
+        this.answers = answers;
     }
 
-    public Quiz(Integer id, String quizQuestion, Integer exp, Integer loId) {
+    public Quiz(Integer id, String quizQuestion, Integer exp, Integer loId, List<Answer> answers) {
         super(id);
         this.quizQuestion = quizQuestion;
         this.exp = exp;
         this.loId = loId;
+        this.answers = answers;
     }
 
     public String getQuizQuestion() {
@@ -43,5 +48,13 @@ public class Quiz extends BaseModel {
 
     public void setLoId(Integer loId) {
         this.loId = loId;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }
