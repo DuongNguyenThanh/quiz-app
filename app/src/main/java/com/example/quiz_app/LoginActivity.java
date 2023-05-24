@@ -17,8 +17,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -27,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private final static int REQUEST_CODE_REGISTER = 10000;
 
     private Button btnLogin;
-    private EditText txtUsername, txtPassword;
+    private EditText txtEmail, txtPassword;
     private TextView tvResetPass, tvRegister;
     protected FirebaseAuth mAuth;
     protected ProgressDialog dialog;
@@ -68,11 +70,11 @@ public class LoginActivity extends AppCompatActivity {
         if(requestCode == REQUEST_CODE_REGISTER) {
             if(resultCode == Activity.RESULT_OK) {
                 // take data from Intent
-                final String username = data.getStringExtra("email");
+                final String email = data.getStringExtra("email");
                 final String password = data.getStringExtra("password");
 
                 //Set back data for txtEmail and password
-                txtUsername.setText(username);
+                txtEmail.setText(email);
                 txtPassword.setText(password);
             } else {
                 // DetailActivity fail
@@ -125,11 +127,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login() {
 
-        String username = txtUsername.getText().toString();
+        String email = txtEmail.getText().toString();
         String password = txtPassword.getText().toString();
 
-        if(TextUtils.isEmpty(username)) {
-            Toast.makeText(LoginActivity.this, "Username is required", Toast.LENGTH_LONG).show();
+        if(TextUtils.isEmpty(email)) {
+            Toast.makeText(LoginActivity.this, "Email is required", Toast.LENGTH_LONG).show();
             return;
         }
         if(TextUtils.isEmpty(password)) {
@@ -138,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         dialog.show();
-        mAuth.signInWithEmailAndPassword(username, password)
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
@@ -167,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initView() {
 
         btnLogin = findViewById(R.id.loginButton);
-        txtUsername = findViewById(R.id.username);
+        txtEmail = findViewById(R.id.email);
         txtPassword = findViewById(R.id.password);
         tvResetPass = findViewById(R.id.forgotPassword);
         tvRegister = findViewById(R.id.gotoRegister);

@@ -34,13 +34,13 @@
                 />
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/custom_edittext"
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
-                android:hint="Username"
+                android:hint="Email"
                 android:textSize="15sp"
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:textColor="@color/black"
