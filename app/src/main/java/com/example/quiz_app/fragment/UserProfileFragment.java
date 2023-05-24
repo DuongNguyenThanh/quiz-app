@@ -28,7 +28,7 @@ public class UserProfileFragment extends Fragment {
 
     private UserDAO userDAO;
     private TextView usernameTextView, dobTextView;
-    private Button editUser, signOut;
+    private Button editUser;
     private User user;
     protected FirebaseAuth mAuth;
 
@@ -54,16 +54,6 @@ public class UserProfileFragment extends Fragment {
                 intent.putExtra("user", user);
                 intent.putExtra("user-id", user.getId());
                 startActivityForResult(intent, REQUEST_CODE_UPDATE);
-            }
-        });
-
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),
-                        MainActivity.class);
-                intent.putExtra("sign-out", "true");
-                startActivity(intent);
             }
         });
 
@@ -94,6 +84,5 @@ public class UserProfileFragment extends Fragment {
         usernameTextView = view.findViewById(R.id.username);
         dobTextView = view.findViewById(R.id.dob);
         editUser = view.findViewById(R.id.editProfile);
-        signOut = view.findViewById(R.id.signOut);
     }
 }
