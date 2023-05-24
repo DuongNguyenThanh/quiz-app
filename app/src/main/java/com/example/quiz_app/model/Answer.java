@@ -3,19 +3,23 @@ package com.example.quiz_app.model;
 public class Answer extends BaseModel {
 
     private String content;
-    private Boolean isTrue;
-    private Integer quizId;
+    private Integer isTrue, quizId;
 
     public Answer() {
     }
 
-    public Answer(String content, Boolean isTrue, Integer quizId) {
+    public Answer(String content, Integer isTrue) {
+        this.content = content;
+        this.isTrue = isTrue;
+    }
+
+    public Answer(String content, Integer isTrue, Integer quizId) {
         this.content = content;
         this.isTrue = isTrue;
         this.quizId = quizId;
     }
 
-    public Answer(Integer id, String content, Boolean isTrue, Integer quizId) {
+    public Answer(Integer id, String content, Integer isTrue, Integer quizId) {
         super(id);
         this.content = content;
         this.isTrue = isTrue;
@@ -30,11 +34,11 @@ public class Answer extends BaseModel {
         this.content = content;
     }
 
-    public Boolean getTrue() {
+    public Integer getTrue() {
         return isTrue;
     }
 
-    public void setTrue(Boolean aTrue) {
+    public void setTrue(Integer aTrue) {
         isTrue = aTrue;
     }
 
