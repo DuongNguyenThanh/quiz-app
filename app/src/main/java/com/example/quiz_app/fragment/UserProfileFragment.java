@@ -14,7 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.quiz_app.EditUserActivity;
+import com.example.quiz_app.LoginActivity;
+import com.example.quiz_app.MainActivity;
 import com.example.quiz_app.R;
+import com.example.quiz_app.RegisterActivity;
 import com.example.quiz_app.dal.UserDAO;
 import com.example.quiz_app.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,7 +28,7 @@ public class UserProfileFragment extends Fragment {
 
     private UserDAO userDAO;
     private TextView usernameTextView, dobTextView;
-    private Button editUser;
+    private Button editUser, signOut;
     private User user;
     protected FirebaseAuth mAuth;
 
@@ -51,6 +54,16 @@ public class UserProfileFragment extends Fragment {
                 intent.putExtra("user", user);
                 intent.putExtra("user-id", user.getId());
                 startActivityForResult(intent, REQUEST_CODE_UPDATE);
+            }
+        });
+
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),
+                        MainActivity.class);
+                intent.putExtra("sign-out", "true");
+                startActivity(intent);
             }
         });
 
@@ -81,5 +94,6 @@ public class UserProfileFragment extends Fragment {
         usernameTextView = view.findViewById(R.id.username);
         dobTextView = view.findViewById(R.id.dob);
         editUser = view.findViewById(R.id.editProfile);
+        signOut = view.findViewById(R.id.signOut);
     }
 }

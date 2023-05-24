@@ -11,17 +11,24 @@ import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.quiz_app.adapter.CategorySpinnerAdapter;
+import com.example.quiz_app.adapter.ImageAdapter;
+import com.example.quiz_app.adapter.QuizAdapter;
 import com.example.quiz_app.dal.CategoryDAO;
+import com.example.quiz_app.model.Answer;
 import com.example.quiz_app.model.Category;
+import com.example.quiz_app.model.Quiz;
 import com.example.quiz_app.util.ImageTypeEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CreateLoActivity extends AppCompatActivity {
+public class CreateLoActivity extends AppCompatActivity implements QuizAdapter.QuizListener {
 
     private final static int REQUEST_CODE_IMAGE = 10001;
 
@@ -31,6 +38,7 @@ public class CreateLoActivity extends AppCompatActivity {
     private ImageView avtImage;
     private RecyclerView quizRecyclerView;
     private CategoryDAO mCategoryDAO;
+    private QuizAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +47,7 @@ public class CreateLoActivity extends AppCompatActivity {
 
         initView();
 
+        // Category spinner
         CategorySpinnerAdapter categorySpinnerAdapter = new CategorySpinnerAdapter(this);
         mCategoryDAO = new CategoryDAO(this);
 
@@ -46,6 +55,28 @@ public class CreateLoActivity extends AppCompatActivity {
         categorySpinnerAdapter.setLstCategory(categoryList);
 
         cateSpinner.setAdapter(categorySpinnerAdapter);
+
+        Answer answer1 = new Answer("abc", false, 1);
+        Answer answer2 = new Answer("asdf", false, 1);
+        Answer answer3 = new Answer("adfs", true, 1);
+        Answer answer4 = new Answer("adfg", false, 1);
+        List<Answer> answers = new ArrayList<>();
+        answers.add(answer1);
+        answers.add(answer2);
+        answers.add(answer3);
+        answers.add(answer4);
+
+        Quiz quiz = new Quiz("hey hey hey", 100, 1, answers);
+        List<Quiz> quizs = new ArrayList<>();
+        quizs.add(quiz);
+
+        // Quiz recycle view
+        adapter = new QuizAdapter(this);
+        adapter.setLstQuiz(quizs);
+        LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        quizRecyclerView.setLayoutManager(manager);
+        quizRecyclerView.setAdapter(adapter);
+        adapter.setQuizListener(this);
 
         btnChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +91,14 @@ public class CreateLoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        btnAddQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CreateLoActivity.this, AddQuizActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -92,5 +131,10 @@ public class CreateLoActivity extends AppCompatActivity {
         cancelCreateLo = findViewById(R.id.cancelCreateLO);
         saveLo = findViewById(R.id.saveLO);
         quizRecyclerView = findViewById(R.id.quizRecyclerView);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
     }
 }

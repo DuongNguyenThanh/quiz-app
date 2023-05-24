@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/createLOTitle"
@@ -35,7 +34,7 @@
     <EditText
         android:id="@+id/quizNameTxt"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@drawable/custom_edittext_v2"
         android:padding="8dp"
         android:hint="Enter quiz lesson name"
@@ -49,7 +48,7 @@
 
     <TextView
         android:id="@+id/secondHeader"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="2. Choose category"
         android:textSize="15sp"
@@ -57,92 +56,87 @@
         android:layout_marginTop="5dp"
         android:layout_marginStart="10dp"
         android:textColor="@color/purple"
-        android:gravity="center_vertical"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/quizNameTxt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/categorySpinner"
         />
 
     <Spinner
         android:id="@+id/categorySpinner"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="17dp"
-        android:layout_marginRight="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/secondHeader"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintTop_toBottomOf="@id/quizNameTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/secondHeader"
         />
 
     <TextView
         android:id="@+id/thirdHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3. Choose avatar"
-        android:textSize="15sp"
-        android:padding="10dp"
-        android:layout_marginTop="5dp"
         android:layout_marginStart="10dp"
-        android:textColor="@color/purple"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="3. Choose avatar"
+        android:textColor="@color/purple"
+        android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categorySpinner"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/secondHeader" />
 
     <Button
         android:id="@+id/btnChooseImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
         android:layout_gravity="center_vertical"
-        android:text="Choose image"
-        android:textSize="12sp"
+        android:layout_marginStart="5dp"
         android:backgroundTint="@color/purple"
-        app:cornerRadius = "10dp"
-        app:layout_constraintTop_toBottomOf="@id/categorySpinner"
+        android:text="Choose image"
+        android:textSize="10sp"
+        app:cornerRadius="10dp"
         app:layout_constraintStart_toEndOf="@id/thirdHeader"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/secondHeader" />
 
     <ImageView
         android:id="@+id/avtImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginEnd="5dp"
         android:src="@drawable/avt_profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/thirdHeader"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnChooseImage"
+        app:layout_constraintTop_toBottomOf="@+id/secondHeader" />
 
     <TextView
         android:id="@+id/fourthHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4. Add your quiz"
-        android:textSize="15sp"
-        android:padding="10dp"
-        android:layout_marginTop="5dp"
         android:layout_marginStart="10dp"
-        android:textColor="@color/purple"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/avtImage"
+        android:padding="10dp"
+        android:text="4. Add your quiz"
+        android:textColor="@color/purple"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/btnAddQuiz"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/thirdHeader" />
 
     <Button
         android:id="@+id/btnAddQuiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp"
         android:layout_gravity="center_vertical"
-        android:text="Add a quiz"
-        android:textSize="12sp"
-        android:drawableLeft="@drawable/baseline_add_24"
+        android:layout_marginStart="5dp"
         android:backgroundTint="@color/purple"
-        app:cornerRadius = "10dp"
-        app:layout_constraintTop_toBottomOf="@id/avtImage"
+        android:text="Add a quiz"
+        android:textSize="10sp"
+        app:cornerRadius="10dp"
         app:layout_constraintStart_toEndOf="@id/fourthHeader"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/btnChooseImage" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quizRecyclerView"
@@ -158,13 +152,13 @@
 
     <Button
         android:id="@+id/cancelCreateLO"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:text="cancel"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:backgroundTint="@color/purple"
         app:cornerRadius = "20dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="35dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -172,13 +166,13 @@
 
     <Button
         android:id="@+id/saveLO"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
         android:text="save"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:backgroundTint="@color/purple"
         app:cornerRadius = "20dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="35dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
