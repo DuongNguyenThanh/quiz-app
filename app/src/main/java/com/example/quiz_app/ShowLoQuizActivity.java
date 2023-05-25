@@ -1,5 +1,6 @@
 package com.example.quiz_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -59,5 +60,9 @@ public class ShowLoQuizActivity extends AppCompatActivity implements LearningObj
     @Override
     public void onItemClick(View view, int position) {
 
+        Intent intent = new Intent(ShowLoQuizActivity.this,
+                QuizActivity.class);
+        intent.putExtra("lo-id", adapter.getLearningObject(position).getId());
+        startActivity(intent);
     }
 }

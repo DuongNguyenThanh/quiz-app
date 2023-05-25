@@ -24,16 +24,34 @@ public class LearningObjectAdapter extends RecyclerView.Adapter<LearningObjectAd
 
     private Context context;
     private List<LearningObject> lstLearningObject;
+    private List<LearningObject> lstBackup;
     private LearningObjectListener learningObjectListener;
     private UserDAO mUserDAO;
 
     public LearningObjectAdapter(Context context) {
         this.context = context;
         lstLearningObject = new ArrayList<>();
+        lstBackup = new ArrayList<>();
+    }
+
+    public List<LearningObject> getBackup() {
+
+        return lstBackup;
+    }
+
+    public void setBackup(List<LearningObject> lstBackup) {
+
+        this.lstBackup = lstBackup;
     }
 
     public void setLearningObjectListener(LearningObjectListener learningObjectListener) {
         this.learningObjectListener = learningObjectListener;
+    }
+
+    public void filterList(List<LearningObject> filterLst) {
+
+        lstLearningObject = filterLst;
+        notifyDataSetChanged();
     }
 
     public void setLstLearningObject(List<LearningObject> lstLearningObject) {
@@ -74,7 +92,7 @@ public class LearningObjectAdapter extends RecyclerView.Adapter<LearningObjectAd
         else {
             holder.imageLo.setImageResource(R.drawable.avt_profile);
         }
-        User user = mUserDAO.getUserByLoIdAndStatus(learningObject.getId(), UserLoStatusEnum.CREATE.name());
+        User user = mUserDAO.getUserByLoIdAndStatus(learningObject.getId(), UserLoStatusEnum.CREATE_LO.name());
         holder.numQuestion.setText("Number of questions: " + learningObject.getQuizzes().size());
         holder.createdBy.setText("Created by: " + user.getName());
     }

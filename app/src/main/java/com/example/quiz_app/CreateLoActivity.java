@@ -117,7 +117,7 @@ public class CreateLoActivity extends AppCompatActivity implements QuizAdapter.Q
                 // Save User Lo - status: CREATE
                 String accountId = mAuth.getCurrentUser().getUid();
                 Integer uId = mUserDAO.getUserByAccountId(accountId).getId();
-                UserLo userLo = new UserLo(0, UserLoStatusEnum.CREATE.name(), loId, uId);
+                UserLo userLo = new UserLo(0, UserLoStatusEnum.CREATE_LO.name(), loId, uId);
                 mUserLoDAO.addUserLo(userLo);
 
                 finish();

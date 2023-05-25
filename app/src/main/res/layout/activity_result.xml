@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/iconTrophy"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="32dp"
+        app:srcCompat="@drawable/reward"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/congratulationTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Congratulations!"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="@+id/iconTrophy"
+        app:layout_constraintStart_toStartOf="@+id/iconTrophy"
+        app:layout_constraintTop_toBottomOf="@+id/iconTrophy"
+        />
+
+    <TextView
+        android:id="@+id/scoreTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="YOUR SCORE"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/congratulationTv"
+        app:layout_constraintStart_toStartOf="@+id/congratulationTv"
+        app:layout_constraintTop_toBottomOf="@+id/congratulationTv"
+        />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10/10"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="@+id/scoreTv"
+        app:layout_constraintStart_toStartOf="@+id/scoreTv"
+        app:layout_constraintTop_toBottomOf="@+id/scoreTv"
+        />
+
+    <TextView
+        android:id="@+id/earnExpTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="EARNED EXP"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/score"
+        app:layout_constraintStart_toStartOf="@+id/score"
+        app:layout_constraintTop_toBottomOf="@+id/score"
+        />
+
+    <ImageView
+        android:id="@+id/iconExp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/experience"
+        app:layout_constraintStart_toStartOf="@+id/earnExpTv"
+        app:layout_constraintTop_toBottomOf="@+id/earnExpTv" />
+
+    <TextView
+        android:id="@+id/earnedExp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:text="1000"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="@+id/earnExpTv"
+        app:layout_constraintStart_toEndOf="@+id/iconExp"
+        app:layout_constraintTop_toBottomOf="@+id/earnExpTv" />
+
+    <Button
+        android:id="@+id/completeBtn"
+        android:layout_width="130dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="5dp"
+        android:backgroundTint="@color/purple"
+        android:text="Complete"
+        android:textSize="15sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

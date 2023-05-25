@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/viewBg"
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
+        android:background="@drawable/background_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="10dp"
+        android:text="24"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:drawableStartCompat="@drawable/baseline_timer_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/questionCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:drawablePadding="10dp"
+        android:text="1/10"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:drawableRightCompat="@drawable/baseline_question_24"
+        app:drawableTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/quizQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@drawable/rounded_box"
+        android:text="Quiz question..."
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer"
+        />
+
+    <TextView
+        android:id="@+id/optionA"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_edittext_v2"
+        android:padding="15dp"
+        android:text="Option A"
+        app:layout_constraintEnd_toEndOf="@+id/quizQuestion"
+        app:layout_constraintStart_toStartOf="@+id/quizQuestion"
+        app:layout_constraintTop_toBottomOf="@+id/quizQuestion" />
+
+    <TextView
+        android:id="@+id/optionB"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_edittext_v2"
+        android:padding="15dp"
+        android:text="Option B"
+        app:layout_constraintEnd_toEndOf="@+id/optionA"
+        app:layout_constraintStart_toStartOf="@+id/optionA"
+        app:layout_constraintTop_toBottomOf="@+id/optionA" />
+
+    <TextView
+        android:id="@+id/optionC"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_edittext_v2"
+        android:padding="15dp"
+        android:text="Option C"
+        app:layout_constraintEnd_toEndOf="@+id/optionB"
+        app:layout_constraintStart_toStartOf="@+id/optionB"
+        app:layout_constraintTop_toBottomOf="@+id/optionB" />
+
+    <TextView
+        android:id="@+id/optionD"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_edittext_v2"
+        android:padding="15dp"
+        android:text="Option D"
+        app:layout_constraintEnd_toEndOf="@+id/optionC"
+        app:layout_constraintStart_toStartOf="@+id/optionC"
+        app:layout_constraintTop_toBottomOf="@+id/optionC" />
+
+    <Button
+        android:id="@+id/cancelBtn"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:text="Quit"
+        android:textSize="15sp"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "20dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="110dp"
+        android:layout_height="50dp"
+        android:text="Next"
+        android:textSize="15sp"
+        android:backgroundTint="@color/purple"
+        app:cornerRadius = "20dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

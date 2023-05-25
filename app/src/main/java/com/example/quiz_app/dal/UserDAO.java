@@ -43,6 +43,7 @@ public class UserDAO {
         ContentValues values = new ContentValues();
         values.put("name", user.getName());
         values.put("dob", user.getDob());
+        values.put("exp", user.getExp());
         values.put("image_id", user.getImageId());
 
         int rowsAffected = db.update(SQLiteHelper.TABLE_USER, values, "id = ?",

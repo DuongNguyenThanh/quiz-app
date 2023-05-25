@@ -2,7 +2,7 @@ package com.example.quiz_app.model.enumtype;
 
 public enum UserLoStatusEnum {
 
-    CREATE,
+    CREATE_LO,
     DOING,
     COMPLETE
 }

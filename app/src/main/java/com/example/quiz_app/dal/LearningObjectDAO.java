@@ -31,6 +31,179 @@ public class LearningObjectDAO {
         dbHelper.close();
     }
 
+    public List<LearningObject> getAllLearningObjects() {
+
+        open();
+        List<LearningObject> learningObjects = new ArrayList<>();
+
+        String selectQueryLearningObject = "SELECT * FROM " + SQLiteHelper.TABLE_LEARNING_OBJECT;
+        Cursor cursorLearningObject = db.rawQuery(selectQueryLearningObject, null);
+        cursorLearningObject.moveToFirst();
+
+        if (cursorLearningObject.moveToFirst()) {
+            do {
+                Integer id = cursorLearningObject.getInt(0);
+                String title = cursorLearningObject.getString(1);
+                Integer categoryId = cursorLearningObject.getInt(2);
+                Integer imageId = cursorLearningObject.getInt(3);
+
+                Category category = new Category();
+                // Find Category by id
+                String[] selectionArgsCategory = {categoryId.toString()};
+                String selectQueryCategory = "SELECT * FROM " + SQLiteHelper.TABLE_CATEGORY +
+                        " WHERE id = ? ";
+                Cursor cursorCategory = db.rawQuery(selectQueryCategory, selectionArgsCategory);
+                cursorCategory.moveToFirst();
+
+                if (cursorCategory.moveToFirst()) {
+
+                    String name = cursorCategory.getString(1);
+                    String imgSource = cursorCategory.getString(2);
+                    category = new Category(categoryId, name, imgSource);
+                }
+                cursorCategory.close();
+
+                Image image = new Image();
+                if (imageId != -1) {
+                    // Find Image by id
+                    String[] selectionArgsImage = {imageId.toString()};
+                    String selectQueryImage = "SELECT * FROM " + SQLiteHelper.TABLE_IMAGE +
+                            " WHERE id = ?";
+                    Cursor cursorImage = db.rawQuery(selectQueryImage, selectionArgsImage);
+                    cursorImage.moveToFirst();
+
+                    if (cursorImage.moveToFirst()) {
+
+                        String src = cursorImage.getString(1);
+                        String type = cursorImage.getString(2);
+                        image = new Image(imageId, src, type);
+                    }
+                    cursorImage.close();
+                }
+                else {
+                    image.setId(imageId);
+                }
+
+                // Find Quizzes by Learning Object id
+                List<Quiz> quizzes = new ArrayList<>();
+
+                String[] selectionArgsQuiz = {id.toString()};
+                // Find Learning Object by category id
+                String selectQueryQuiz = "SELECT * FROM " + SQLiteHelper.TABLE_QUIZ +
+                        " WHERE lo_id = ?";
+                Cursor cursorQuiz = db.rawQuery(selectQueryQuiz, selectionArgsQuiz);
+                cursorQuiz.moveToFirst();
+
+                if (cursorQuiz.moveToFirst()) {
+                    do {
+                        Integer quizId = cursorQuiz.getInt(0);
+                        String quizQuestion = cursorQuiz.getString(1);
+                        Integer exp = cursorQuiz.getInt(2);
+
+                        Quiz quiz = new Quiz(quizId, quizQuestion, exp, id);
+                        quizzes.add(quiz);
+
+                    } while (cursorQuiz.moveToNext());
+                }
+                cursorQuiz.close();
+
+                LearningObject learningObject = new LearningObject(id, title, category, image, quizzes);
+                learningObjects.add(learningObject);
+            } while (cursorLearningObject.moveToNext());
+        }
+        cursorLearningObject.close();
+        close();
+        return learningObjects;
+    }
+
+    public List<LearningObject> getLearningObjectByStatusAndUserId(String status, Integer userId) {
+
+        open();
+        List<LearningObject> learningObjects = new ArrayList<>();
+
+        String[] selectionArgs = {status, userId.toString()};
+        String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_LEARNING_OBJECT + " lo " +
+                "INNER JOIN " + SQLiteHelper.TABLE_USER_LO + " ulo" + " ON lo.id = ulo.lo_id " +
+                "WHERE  ulo.status = ? AND ulo.user_id = ? ";
+        Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
+        cursor.moveToFirst();
+
+        if (cursor.moveToFirst()) {
+            do {
+                Integer id = cursor.getInt(0);
+                String title = cursor.getString(1);
+                Integer categoryId = cursor.getInt(2);
+                Integer imageId = cursor.getInt(3);
+
+                Category category = new Category();
+                // Find Category by id
+                String[] selectionArgsCategory = {categoryId.toString()};
+                String selectQueryCategory = "SELECT * FROM " + SQLiteHelper.TABLE_CATEGORY +
+                        " WHERE id = ? ";
+                Cursor cursorCategory = db.rawQuery(selectQueryCategory, selectionArgsCategory);
+                cursorCategory.moveToFirst();
+
+                if (cursorCategory.moveToFirst()) {
+
+                    String name = cursorCategory.getString(1);
+                    String imgSource = cursorCategory.getString(2);
+                    category = new Category(categoryId, name, imgSource);
+                }
+                cursorCategory.close();
+
+                Image image = new Image();
+                if (imageId != -1) {
+                    // Find Image by id
+                    String[] selectionArgsImage = {imageId.toString()};
+                    String selectQueryImage = "SELECT * FROM " + SQLiteHelper.TABLE_IMAGE +
+                            " WHERE id = ?";
+                    Cursor cursorImage = db.rawQuery(selectQueryImage, selectionArgsImage);
+                    cursorImage.moveToFirst();
+
+                    if (cursorImage.moveToFirst()) {
+
+                        String src = cursorImage.getString(1);
+                        String type = cursorImage.getString(2);
+                        image = new Image(imageId, src, type);
+                    }
+                    cursorImage.close();
+                }
+                else {
+                    image.setId(imageId);
+                }
+
+                // Find Quizzes by Learning Object id
+                List<Quiz> quizzes = new ArrayList<>();
+
+                String[] selectionArgsQuiz = {id.toString()};
+                // Find Learning Object by category id
+                String selectQueryQuiz = "SELECT * FROM " + SQLiteHelper.TABLE_QUIZ +
+                        " WHERE lo_id = ?";
+                Cursor cursorQuiz = db.rawQuery(selectQueryQuiz, selectionArgsQuiz);
+                cursorQuiz.moveToFirst();
+
+                if (cursorQuiz.moveToFirst()) {
+                    do {
+                        Integer quizId = cursorQuiz.getInt(0);
+                        String quizQuestion = cursorQuiz.getString(1);
+                        Integer exp = cursorQuiz.getInt(2);
+
+                        Quiz quiz = new Quiz(quizId, quizQuestion, exp, id);
+                        quizzes.add(quiz);
+
+                    } while (cursorQuiz.moveToNext());
+                }
+                cursorQuiz.close();
+
+                LearningObject learningObject = new LearningObject(id, title, category, image, quizzes);
+                learningObjects.add(learningObject);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return learningObjects;
+    }
+
     public List<LearningObject> getLearningObjectByCategory(Category category) {
 
         open();
