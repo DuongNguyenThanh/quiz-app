@@ -76,4 +76,30 @@ public class UserDAO {
         close();
         return user;
     }
+
+    public User getUserByLoIdAndStatus(Integer loId, String status) {
+
+        open();
+        User user = new User();
+
+        String[] selectionArgs = {loId.toString(), status};
+        String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_USER + " u " +
+                "INNER JOIN " + SQLiteHelper.TABLE_USER_LO + " ulo" + " ON u.id = ulo.user_id " +
+                "INNER JOIN " + SQLiteHelper.TABLE_LEARNING_OBJECT + " lo" + " ON ulo.lo_id = lo.id " +
+                "WHERE lo.id = ? AND ulo.status = ? ";
+        Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
+        cursor.moveToFirst();
+
+        if (cursor.moveToFirst()) {
+            do {
+                user.setId(cursor.getInt(0));
+                user.setName(cursor.getString(1));
+                user.setDob(cursor.getString(2));
+                user.setExp(cursor.getInt(3));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        close();
+        return user;
+    }
 }

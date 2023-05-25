@@ -52,6 +52,7 @@ public class ImageActivity extends AppCompatActivity implements ImageAdapter.Ima
         Intent data = new Intent();
 
         // pass data into intent
+        data.putExtra("id-image", image.getId());
         data.putExtra("src-image", image.getSrc());
 
         // set resultCode is Activity.RESULT_OK

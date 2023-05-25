@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quiz_app.R;
-import com.example.quiz_app.ShowQuizActivity;
+import com.example.quiz_app.ShowLoQuizActivity;
 import com.example.quiz_app.adapter.CategoryAdapter;
 import com.example.quiz_app.dal.CategoryDAO;
 import com.example.quiz_app.model.Category;
@@ -59,7 +59,8 @@ public class HomeFragment extends Fragment implements CategoryAdapter.CategoryLi
     public void onItemClick(View view, int position) {
 
         Category category = adapter.getCate(position);
-        Intent intent = new Intent(getActivity(), ShowQuizActivity.class);
+        Intent intent = new Intent(getActivity(), ShowLoQuizActivity.class);
+        intent.putExtra("category-id", category.getId());
         intent.putExtra("category", category);
         startActivity(intent);
     }

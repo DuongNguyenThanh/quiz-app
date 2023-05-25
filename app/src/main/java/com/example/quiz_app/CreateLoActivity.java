@@ -18,9 +18,17 @@ import com.bumptech.glide.Glide;
 import com.example.quiz_app.adapter.CategorySpinnerAdapter;
 import com.example.quiz_app.adapter.QuizAdapter;
 import com.example.quiz_app.dal.CategoryDAO;
+import com.example.quiz_app.dal.LearningObjectDAO;
+import com.example.quiz_app.dal.UserDAO;
+import com.example.quiz_app.dal.UserLoDAO;
 import com.example.quiz_app.model.Category;
+import com.example.quiz_app.model.Image;
+import com.example.quiz_app.model.LearningObject;
 import com.example.quiz_app.model.Quiz;
-import com.example.quiz_app.util.ImageTypeEnum;
+import com.example.quiz_app.model.UserLo;
+import com.example.quiz_app.model.enumtype.ImageTypeEnum;
+import com.example.quiz_app.model.enumtype.UserLoStatusEnum;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -36,7 +44,12 @@ public class CreateLoActivity extends AppCompatActivity implements QuizAdapter.Q
     private ImageView avtImage;
     private RecyclerView quizRecyclerView;
     private CategoryDAO mCategoryDAO;
+    private LearningObjectDAO mLearningObjectDAO;
+    private UserDAO mUserDAO;
+    private UserLoDAO mUserLoDAO;
     private QuizAdapter adapter;
+    private Integer imageId;
+    protected FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,11 +57,15 @@ public class CreateLoActivity extends AppCompatActivity implements QuizAdapter.Q
         setContentView(R.layout.activity_create_lo);
 
         initView();
+        mAuth = FirebaseAuth.getInstance();
+        mCategoryDAO = new CategoryDAO(this);
+        mLearningObjectDAO = new LearningObjectDAO(this);
+        mUserDAO = new UserDAO(this);
+        mUserLoDAO = new UserLoDAO(this);
+        imageId = -1;
 
         // Category spinner
         CategorySpinnerAdapter categorySpinnerAdapter = new CategorySpinnerAdapter(this);
-        mCategoryDAO = new CategoryDAO(this);
-
         List<Category> categoryList = mCategoryDAO.getAllCategories();
         categorySpinnerAdapter.setLstCategory(categoryList);
 
@@ -84,6 +101,28 @@ public class CreateLoActivity extends AppCompatActivity implements QuizAdapter.Q
                 startActivityForResult(intent, REQUEST_CODE_ADD_QUIZ);
             }
         });
+
+        saveLo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                // Save Learning Object
+                Category category = (Category) cateSpinner.getSelectedItem();
+                Image image = new Image();
+                image.setId(imageId);
+
+                LearningObject learningObject = new LearningObject(quizNameTxt.getText().toString(), category, image, adapter.getLstQuiz());
+                Integer loId = mLearningObjectDAO.addLearningObjectWithQuizzes(learningObject);
+
+                // Save User Lo - status: CREATE
+                String accountId = mAuth.getCurrentUser().getUid();
+                Integer uId = mUserDAO.getUserByAccountId(accountId).getId();
+                UserLo userLo = new UserLo(0, UserLoStatusEnum.CREATE.name(), loId, uId);
+                mUserLoDAO.addUserLo(userLo);
+
+                finish();
+            }
+        });
     }
 
     @Override
@@ -93,6 +132,7 @@ public class CreateLoActivity extends AppCompatActivity implements QuizAdapter.Q
             if(resultCode == Activity.RESULT_OK) {
                 // take data from Intent
                 final String srcImage = data.getStringExtra("src-image");
+                imageId = data.getIntExtra("id-image", -1);
 
                 //Set back data for txtEmail and password
                 Glide.with(this)

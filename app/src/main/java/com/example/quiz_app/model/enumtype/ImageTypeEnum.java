@@ -1,4 +1,4 @@
-package com.example.quiz_app.util;
+package com.example.quiz_app.model.enumtype;
 
 public enum ImageTypeEnum {
 

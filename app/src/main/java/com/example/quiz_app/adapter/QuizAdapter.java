@@ -38,6 +38,10 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         notifyDataSetChanged();
     }
 
+    public List<Quiz> getLstQuiz() {
+        return lstQuiz;
+    }
+
     public void addQuiz(Quiz quiz) {
         lstQuiz.add(quiz);
         notifyDataSetChanged();

@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.quiz_app.model.Image;
-import com.example.quiz_app.util.ImageTypeEnum;
+import com.example.quiz_app.model.enumtype.ImageTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;

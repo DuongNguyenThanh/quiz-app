@@ -74,6 +74,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
 
             cateName = view.findViewById(R.id.category);
             cateImage = view.findViewById(R.id.image);
+
+            view.setOnClickListener(this);
         }
 
         @Override

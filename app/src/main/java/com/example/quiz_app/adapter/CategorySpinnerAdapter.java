@@ -35,7 +35,7 @@ public class CategorySpinnerAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int pos) {
-        return pos;
+        return lstCategory.get(pos);
     }
 
     @Override
