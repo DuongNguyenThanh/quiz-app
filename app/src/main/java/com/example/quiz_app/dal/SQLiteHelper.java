@@ -14,6 +14,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_IMAGE = "image";
     public static final String TABLE_USER = "user";
     public static final String TABLE_USER_LO = "user_lo";
+    public static final String TABLE_USER_QUIZ = "user_quiz";
     public static final String TABLE_LEARNING_OBJECT = "learning_object";
     public static final String TABLE_QUIZ = "quiz";
     public static final String TABLE_CATEGORY = "category";
@@ -61,6 +62,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String tableUserLo = "CREATE TABLE " + TABLE_USER_LO + " (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "current_exp INTEGER, " +
+                "status TEXT, " +
                 "lo_id INTEGER, " +
                 "user_id INTEGER, " +
                 "FOREIGN KEY('lo_id') REFERENCES " + TABLE_LEARNING_OBJECT + "('id'), " +
@@ -73,6 +75,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 "exp INTEGER, " +
                 "lo_id INTEGER, " +
                 "FOREIGN KEY('lo_id') REFERENCES " + TABLE_LEARNING_OBJECT + "('id') " +
+                ")";
+
+        String tableUserQuiz = "CREATE TABLE " + TABLE_USER_QUIZ + "(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "quiz_id INTEGER, " +
+                "user_id INTEGER, " +
+                "FOREIGN KEY('quiz_id') REFERENCES " + TABLE_QUIZ + "('id'), " +
+                "FOREIGN KEY('user_id') REFERENCES " + TABLE_USER + "('id') " +
                 ")";
 
         String tableAnswer = "CREATE TABLE " + TABLE_ANSWER + "(" +
@@ -89,6 +99,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(tableLo);
         sqLiteDatabase.execSQL(tableUserLo);
         sqLiteDatabase.execSQL(tableQuiz);
+        sqLiteDatabase.execSQL(tableUserQuiz);
         sqLiteDatabase.execSQL(tableAnswer);
     }
 
@@ -102,6 +113,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_LEARNING_OBJECT);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_LO);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_QUIZ);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_ANSWER);
         onCreate(sqLiteDatabase);
     }

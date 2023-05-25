@@ -1,6 +1,8 @@
 package com.example.quiz_app.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +38,20 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         notifyDataSetChanged();
     }
 
+    public List<Quiz> getLstQuiz() {
+        return lstQuiz;
+    }
+
+    public void addQuiz(Quiz quiz) {
+        lstQuiz.add(quiz);
+        notifyDataSetChanged();
+    }
+
+    public void updateQuiz(int position, Quiz quiz) {
+        lstQuiz.set(position, quiz);
+        notifyDataSetChanged();
+    }
+
     public Quiz getQuiz(int position) {
         return lstQuiz.get(position);
     }
@@ -52,23 +68,57 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
     public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
 
         Quiz quiz = lstQuiz.get(position);
+        holder.numQuiz.setText("Quiz: " + (position+1));
         holder.question.setText(quiz.getQuizQuestion());
+
+        // Set text
         holder.as1.setText(quiz.getAnswers().get(0).getContent());
         holder.as2.setText(quiz.getAnswers().get(1).getContent());
         holder.as3.setText(quiz.getAnswers().get(2).getContent());
         holder.as4.setText(quiz.getAnswers().get(3).getContent());
-        if (quiz.getAnswers().get(0).getTrue()) {
-            holder.q1.setImageResource(R.drawable.baseline_radio_button_checked_24);
+
+        // Set color
+        holder.as1.setBackgroundResource(R.drawable.custom_edittext_red);
+        holder.as2.setBackgroundResource(R.drawable.custom_edittext_red);
+        holder.as3.setBackgroundResource(R.drawable.custom_edittext_red);
+        holder.as4.setBackgroundResource(R.drawable.custom_edittext_red);
+        if (quiz.getAnswers().get(0).getTrue() == 1) {
+            holder.as1.setBackgroundResource(R.drawable.custom_edittext_green);
         }
-        if (quiz.getAnswers().get(1).getTrue()) {
-            holder.q2.setImageResource(R.drawable.baseline_radio_button_checked_24);
+        if (quiz.getAnswers().get(1).getTrue() == 1) {
+            holder.as2.setBackgroundResource(R.drawable.custom_edittext_green);
         }
-        if (quiz.getAnswers().get(2).getTrue()) {
-            holder.q3.setImageResource(R.drawable.baseline_radio_button_checked_24);
+        if (quiz.getAnswers().get(2).getTrue() == 1) {
+            holder.as3.setBackgroundResource(R.drawable.custom_edittext_green);
         }
-        if (quiz.getAnswers().get(3).getTrue()) {
-            holder.q4.setImageResource(R.drawable.baseline_radio_button_checked_24);
+        if (quiz.getAnswers().get(3).getTrue() == 1) {
+            holder.as4.setBackgroundResource(R.drawable.custom_edittext_green);
         }
+
+        holder.delQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("Warning");
+                builder.setIcon(R.drawable.remove);
+                builder.setMessage("Are you sure to delete quiz " + (holder.getAdapterPosition()+1));
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        lstQuiz.remove(holder.getAdapterPosition());
+                        notifyDataSetChanged();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
     }
 
     @Override
@@ -78,20 +128,18 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
 
     public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView question, as1, as2, as3, as4;
-        private ImageView q1, q2, q3, q4;
+        private TextView numQuiz, question, as1, as2, as3, as4;
+        private ImageView delQuiz;
 
         public QuizViewHolder(@NonNull View view) {
             super(view);
+            numQuiz = view.findViewById(R.id.numQuiz);
             question = view.findViewById(R.id.showQuizQuestion);
             as1 = view.findViewById(R.id.showAnswerA);
             as2 = view.findViewById(R.id.showAnswerB);
             as3 = view.findViewById(R.id.showAnswerC);
             as4 = view.findViewById(R.id.showAnswerD);
-            q1 = view.findViewById(R.id.radioAnswerA);
-            q2 = view.findViewById(R.id.radioAnswerB);
-            q3 = view.findViewById(R.id.radioAnswerC);
-            q4 = view.findViewById(R.id.radioAnswerD);
+            delQuiz = view.findViewById(R.id.delQuiz);
 
             view.setOnClickListener(this);
         }

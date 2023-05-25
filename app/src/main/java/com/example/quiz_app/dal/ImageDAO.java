@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.quiz_app.model.Image;
-import com.example.quiz_app.util.ImageTypeEnum;
+import com.example.quiz_app.model.enumtype.ImageTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +25,28 @@ public class ImageDAO {
 
     public void close() {
         dbHelper.close();
+    }
+
+    public Image getImageById(Integer id) {
+
+        open();
+        Image image = new Image();
+
+        String[] selectionArgs = {id.toString()};
+        String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_IMAGE +
+                " WHERE id = ?";
+        Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
+        cursor.moveToFirst();
+
+        if (cursor.moveToFirst()) {
+
+            String src = cursor.getString(1);
+            String type = cursor.getString(2);
+            image = new Image(id, src, type);
+        }
+        cursor.close();
+        close();
+        return image;
     }
 
     public List<Image> getImageByImageType(String type) {
@@ -67,7 +89,7 @@ public class ImageDAO {
         open();
         // Add data image
         db.execSQL("INSERT INTO " + SQLiteHelper.TABLE_IMAGE +
-                " (id, src, type) VALUES (0, 'https://cdn-icons-png.flaticon.com/512/10865/10865653.png', '" + ImageTypeEnum.AVATAR.name() +"')");
+                " (id, src, type) VALUES (0, 'https://images.spiderum.com/sp-avatar/3155ad603a6111ec9d6b4f0d35088d14.jpeg', '" + ImageTypeEnum.AVATAR.name() +"')");
         db.execSQL("INSERT INTO " + SQLiteHelper.TABLE_IMAGE +
                 " (src, type) VALUES ('https://cdn-icons-png.flaticon.com/512/924/924915.png', '" + ImageTypeEnum.AVATAR.name() +"')");
         db.execSQL("INSERT INTO " + SQLiteHelper.TABLE_IMAGE +

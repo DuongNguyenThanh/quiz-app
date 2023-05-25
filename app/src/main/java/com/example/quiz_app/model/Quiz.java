@@ -11,11 +11,24 @@ public class Quiz extends BaseModel {
     public Quiz() {
     }
 
+    public Quiz(String quizQuestion, Integer exp, List<Answer> answers) {
+        this.quizQuestion = quizQuestion;
+        this.exp = exp;
+        this.answers = answers;
+    }
+
     public Quiz(String quizQuestion, Integer exp, Integer loId, List<Answer> answers) {
         this.quizQuestion = quizQuestion;
         this.exp = exp;
         this.loId = loId;
         this.answers = answers;
+    }
+
+    public Quiz(Integer id, String quizQuestion, Integer exp, Integer loId) {
+        super(id);
+        this.quizQuestion = quizQuestion;
+        this.exp = exp;
+        this.loId = loId;
     }
 
     public Quiz(Integer id, String quizQuestion, Integer exp, Integer loId, List<Answer> answers) {

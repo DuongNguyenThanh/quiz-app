@@ -1,24 +1,37 @@
 package com.example.quiz_app.model;
 
+import java.util.List;
+
 public class LearningObject extends BaseModel {
 
-    private String title, avatar;
-    private Integer categoryId;
+    private String title;
+    private Category category;
+    private Image image;
+    private List<Quiz> quizzes;
 
     public LearningObject() {
     }
 
-    public LearningObject(String title, String avatar, Integer categoryId) {
+    public LearningObject(String title, Category category, Image image, List<Quiz> quizzes) {
         this.title = title;
-        this.avatar = avatar;
-        this.categoryId = categoryId;
+        this.category = category;
+        this.image = image;
+        this.quizzes = quizzes;
     }
 
-    public LearningObject(Integer id, String title, String avatar, Integer categoryId) {
+    public LearningObject(Integer id, String title, Category category, Image image) {
         super(id);
         this.title = title;
-        this.avatar = avatar;
-        this.categoryId = categoryId;
+        this.category = category;
+        this.image = image;
+    }
+
+    public LearningObject(Integer id, String title, Category category, Image image, List<Quiz> quizzes) {
+        super(id);
+        this.title = title;
+        this.category = category;
+        this.image = image;
+        this.quizzes = quizzes;
     }
 
     public String getTitle() {
@@ -29,19 +42,27 @@ public class LearningObject extends BaseModel {
         this.title = title;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public Integer getCategoryId() {
-        return categoryId;
+    public Image getImage() {
+        return image;
     }
 
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public List<Quiz> getQuizzes() {
+        return quizzes;
+    }
+
+    public void setQuizzes(List<Quiz> quizzes) {
+        this.quizzes = quizzes;
     }
 }

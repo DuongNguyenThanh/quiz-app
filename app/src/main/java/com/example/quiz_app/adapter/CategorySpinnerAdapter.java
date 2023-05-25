@@ -35,7 +35,7 @@ public class CategorySpinnerAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int pos) {
-        return pos;
+        return lstCategory.get(pos);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CategorySpinnerAdapter extends BaseAdapter {
     @Override
     public View getView(int pos, View view, ViewGroup viewGroup) {
 
-        View item = LayoutInflater.from(context).inflate(R.layout.category_item_text, viewGroup, false);
+        View item = LayoutInflater.from(context).inflate(R.layout.spinner_item_text, viewGroup, false);
         TextView tv = item.findViewById(R.id.cateTv);
         tv.setText(lstCategory.get(pos).getName());
         return item;
