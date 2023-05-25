@@ -2,6 +2,7 @@ package com.example.quiz_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private TextView quizQuestion, optionA, optionB, optionC, optionD, questionCounter;
+    private TextView quizQuestion, optionA, optionB, optionC, optionD, questionCounter, countDownTime;
     private Button cancelBtn, nextBtn;
     private QuizDAO mQuizDAO;
     private UserDAO mUserDAO;
@@ -38,6 +39,7 @@ public class QuizActivity extends AppCompatActivity {
     private Quiz quiz;
     private List<Answer> answers;
     private Integer index, quizzesSize, expResult, countQuizTrue;
+    private CountDownTimer timer;
     protected FirebaseAuth mAuth;
 
     @Override
@@ -60,7 +62,8 @@ public class QuizActivity extends AppCompatActivity {
         Integer loId = getIntent().getIntExtra("lo-id", -1);
 
         // Add User Lo - status: DOING
-        if (mUserLoDAO.getUserLoByUserIdAndLoId(user.getId(), loId).getId() == null) {
+        userLo = mUserLoDAO.getUserLoByUserIdAndLoId(user.getId(), loId);
+        if (userLo.getId() == null) {
             userLo = new UserLo(0, UserLoStatusEnum.DOING.name(), loId, user.getId());
             Integer uLoId = mUserLoDAO.addUserLo(userLo);
             userLo.setId(uLoId);
@@ -82,9 +85,14 @@ public class QuizActivity extends AppCompatActivity {
         optionC.setText(answers.get(2).getContent());
         optionD.setText(answers.get(3).getContent());
 
+        resetTimer();
+        timer.start();
+
         optionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                timerCancel();
                 if (answers.get(0).getTrue() == 1) {
                     optionA.setBackgroundResource(R.drawable.option_right);
                     updateInfoIfTrue();
@@ -108,6 +116,8 @@ public class QuizActivity extends AppCompatActivity {
         optionB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                timerCancel();
                 if (answers.get(1).getTrue() == 1) {
                     optionB.setBackgroundResource(R.drawable.option_right);
                     updateInfoIfTrue();
@@ -131,6 +141,8 @@ public class QuizActivity extends AppCompatActivity {
         optionC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                timerCancel();
                 if (answers.get(2).getTrue() == 1) {
                     optionC.setBackgroundResource(R.drawable.option_right);
                     updateInfoIfTrue();
@@ -154,6 +166,8 @@ public class QuizActivity extends AppCompatActivity {
         optionD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                timerCancel();
                 if (answers.get(3).getTrue() == 1) {
                     optionD.setBackgroundResource(R.drawable.option_right);
                     updateInfoIfTrue();
@@ -185,6 +199,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                timer.start();
                 index += 1;
                 if (index == quizzesSize) {
 
@@ -231,6 +246,8 @@ public class QuizActivity extends AppCompatActivity {
         optionD = findViewById(R.id.optionD);
         cancelBtn = findViewById(R.id.cancelBtn);
         nextBtn = findViewById(R.id.nextBtn);
+        countDownTime = findViewById(R.id.countDownTime);
+
         nextBtn.setEnabled(false);
         index = 0;
         expResult = 0;
@@ -275,5 +292,39 @@ public class QuizActivity extends AppCompatActivity {
         optionC.setEnabled(false);
         optionD.setEnabled(false);
         nextBtn.setEnabled(true);
+    }
+
+    private void resetTimer() {
+        timer = new CountDownTimer(30000, 1000) {
+            @Override
+            public void onTick(long l) {
+                countDownTime.setText(String.valueOf(l/1000));
+            }
+
+            @Override
+            public void onFinish() {
+
+                optionA.setBackgroundResource(R.drawable.option_wrong);
+                optionB.setBackgroundResource(R.drawable.option_wrong);
+                optionC.setBackgroundResource(R.drawable.option_wrong);
+                optionD.setBackgroundResource(R.drawable.option_wrong);
+                if (answers.get(0).getTrue() == 1) {
+                    optionA.setBackgroundResource(R.drawable.option_right);
+                } else if (answers.get(1).getTrue() == 1) {
+                    optionB.setBackgroundResource(R.drawable.option_right);
+                } else if (answers.get(2).getTrue() == 1) {
+                    optionC.setBackgroundResource(R.drawable.option_right);
+                } else if (answers.get(3).getTrue() == 1) {
+                    optionD.setBackgroundResource(R.drawable.option_right);
+                }
+                disableAnswer();
+            }
+        };
+    }
+
+    private void timerCancel() {
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 }
