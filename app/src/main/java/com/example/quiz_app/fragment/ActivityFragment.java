@@ -2,7 +2,6 @@ package com.example.quiz_app.fragment;
 
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,21 +10,18 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
 
+import com.example.quiz_app.CreateAcActivity;
 import com.example.quiz_app.CreateLoActivity;
-import com.example.quiz_app.LoginActivity;
+import com.example.quiz_app.DoingAcActivity;
+import com.example.quiz_app.DoneAcActivity;
 import com.example.quiz_app.R;
-import com.example.quiz_app.RegisterActivity;
-import com.example.quiz_app.adapter.FragmentActivityAdapter;
-import com.google.android.material.tabs.TabLayout;
 
 public class ActivityFragment extends Fragment {
 
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+    private CardView createBtn, doneBtn, doingBtn;
     private Button btnCreateQuiz;
 
     @Nullable
@@ -40,30 +36,10 @@ public class ActivityFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewPager = view.findViewById(R.id.viewPageActivity);
-        tabLayout = view.findViewById(R.id.tabLayout);
+        createBtn = view.findViewById(R.id.createBtn);
+        doneBtn = view.findViewById(R.id.doneBtn);
+        doingBtn = view.findViewById(R.id.doingBtn);
         btnCreateQuiz = view.findViewById(R.id.btnAddQuiz);
-        FragmentManager manager = getActivity().getSupportFragmentManager();
-        FragmentActivityAdapter adapter = new FragmentActivityAdapter(manager, 3);
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-        setTabLayoutTitleColor();
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                tabLayout.setTabTextColors(Color.BLACK, getResources().getColor(R.color.purple));
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         btnCreateQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,11 +49,32 @@ public class ActivityFragment extends Fragment {
                 startActivity(intent);
             }
         });
-    }
 
-    private void setTabLayoutTitleColor() {
-        if (viewPager.getCurrentItem() == 0) {
-            tabLayout.setTabTextColors(Color.BLACK, getResources().getColor(R.color.purple));
-        }
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),
+                        CreateAcActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),
+                        DoneAcActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        doingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),
+                        DoingAcActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

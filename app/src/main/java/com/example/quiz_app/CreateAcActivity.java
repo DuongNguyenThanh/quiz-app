@@ -1,17 +1,14 @@
-package com.example.quiz_app.fragment;
+package com.example.quiz_app;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.quiz_app.R;
 import com.example.quiz_app.adapter.LearningObjectAdapter;
 import com.example.quiz_app.dal.LearningObjectDAO;
 import com.example.quiz_app.dal.UserDAO;
@@ -22,42 +19,50 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-public class CreateActivityFragment extends Fragment implements LearningObjectAdapter.LearningObjectListener {
+public class CreateAcActivity extends AppCompatActivity implements LearningObjectAdapter.LearningObjectListener {
 
+    private ImageView rollBack;
     private LearningObjectAdapter adapter;
-    private RecyclerView recyclerView;
+    private RecyclerView createRecyclerView;
     private LearningObjectDAO mLearningObjectDAO;
     private User user;
     private UserDAO mUserDAO;
     protected FirebaseAuth mAuth;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_activity_content, container, false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_ac);
+
+        initView();
 
         mAuth = FirebaseAuth.getInstance();
         String accountId = mAuth.getCurrentUser().getUid();
-        mUserDAO = new UserDAO(getContext());
+        mUserDAO = new UserDAO(this);
         user = mUserDAO.getUserByAccountId(accountId);
 
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        recyclerView = view.findViewById(R.id.activityContentRecyclerView);
-        adapter = new LearningObjectAdapter(getContext());
-        mLearningObjectDAO = new LearningObjectDAO(getContext());
+        adapter = new LearningObjectAdapter(this);
+        mLearningObjectDAO = new LearningObjectDAO(this);
 
         List<LearningObject> learningObjects = mLearningObjectDAO.getLearningObjectByStatusAndUserId(UserLoStatusEnum.CREATE_LO.name(), user.getId());
         adapter.setLstLearningObject(learningObjects);
-        LinearLayoutManager manager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
+        LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        createRecyclerView.setLayoutManager(manager);
+        createRecyclerView.setAdapter(adapter);
         adapter.setLearningObjectListener(this);
+
+        rollBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    private void initView() {
+
+        createRecyclerView = findViewById(R.id.createdRecyclerView);
+        rollBack = findViewById(R.id.rollBack);
     }
 
     @Override
