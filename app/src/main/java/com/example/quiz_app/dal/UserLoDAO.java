@@ -25,6 +25,29 @@ public class UserLoDAO {
         dbHelper.close();
     }
 
+    public UserLo getUserLoByUserIdAndLoIdAndStatus(Integer uId, Integer loId, String status) {
+
+        open();
+        UserLo userLo = new UserLo();
+
+        String[] selectionArgs = {uId.toString(), loId.toString(), status};
+        String selectQuery = "SELECT * FROM " + SQLiteHelper.TABLE_USER_LO +
+                " WHERE user_id = ? AND lo_id = ? AND status = ? ";
+        Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
+        cursor.moveToFirst();
+
+        if (cursor.moveToFirst()) {
+            userLo.setId(cursor.getInt(0));
+            userLo.setCurrentExp(cursor.getInt(1));
+            userLo.setStatus(cursor.getString(2));
+            userLo.setUserId(uId);
+            userLo.setLoId(loId);
+        }
+        cursor.close();
+        close();
+        return userLo;
+    }
+
     public UserLo getUserLoByUserIdAndLoId(Integer uId, Integer loId) {
 
         open();

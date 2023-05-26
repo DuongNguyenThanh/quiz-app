@@ -73,8 +73,19 @@
             android:textColor="@android:color/black"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/percentTrue"
+            app:layout_constraintStart_toEndOf="@+id/imageLo" />
+
+        <TextView
+            android:id="@+id/percentTrue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageLo"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
