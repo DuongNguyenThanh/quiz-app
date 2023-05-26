@@ -12,6 +12,18 @@
         android:theme="@style/Theme.Quizapp"
         tools:targetApi="31">
         <activity
+            android:name=".CreateAcActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DoingAcActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".DoneAcActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ResultActivity"
             android:exported="false" />
 

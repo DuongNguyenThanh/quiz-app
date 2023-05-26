@@ -61,21 +61,24 @@ public class UserProfileFragment extends Fragment {
         }
         usernameTextView.setText(user.getName());
         dobTextView.setText(user.getDob());
-        if (user.getExp() > 100) {
+        if (user.getExp() < 100) {
+            expTextView.setText("Exp: " + user.getExp() + " - Newbie");
+        }
+        if (user.getExp() >= 100) {
             expTextView.setText("Exp: " + user.getExp() + " - Herald User");
-        } else if (user.getExp() > 1000) {
+        } else if (user.getExp() >= 1000) {
             expTextView.setText("Exp: " + user.getExp() + " - Guardian User");
-        } else if (user.getExp() > 10000) {
+        } else if (user.getExp() >= 10000) {
             expTextView.setText("Exp: " + user.getExp() + " - Crusader User");
-        } else if (user.getExp() > 100000) {
+        } else if (user.getExp() >= 100000) {
             expTextView.setText("Exp: " + user.getExp() + " - Archon User");
-        } else if (user.getExp() > 1000000) {
+        } else if (user.getExp() >= 1000000) {
             expTextView.setText("Exp: " + user.getExp() + " - Legend User");
-        } else if (user.getExp() > 10000000) {
+        } else if (user.getExp() >= 10000000) {
             expTextView.setText("Exp: " + user.getExp() + " - Ancient User");
-        } else if (user.getExp() > 100000000) {
+        } else if (user.getExp() >= 100000000) {
             expTextView.setText("Exp: " + user.getExp() + " - Divine User");
-        } else if (user.getExp() > 1000000000) {
+        } else if (user.getExp() >= 1000000000) {
             expTextView.setText("Exp: " + user.getExp() + " - Immortal User");
         }
 
