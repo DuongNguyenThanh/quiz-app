@@ -1,6 +1,7 @@
 package com.example.quiz_app.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.quiz_app.R;
 import com.example.quiz_app.dal.UserDAO;
+import com.example.quiz_app.dal.UserLoDAO;
 import com.example.quiz_app.model.LearningObject;
 import com.example.quiz_app.model.User;
+import com.example.quiz_app.model.UserLo;
 import com.example.quiz_app.model.enumtype.UserLoStatusEnum;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,8 @@ public class LearningObjectAdapter extends RecyclerView.Adapter<LearningObjectAd
     private List<LearningObject> lstBackup;
     private LearningObjectListener learningObjectListener;
     private UserDAO mUserDAO;
+    private UserLoDAO mUserLoDAO;
+    private FirebaseAuth mAuth;
 
     public LearningObjectAdapter(Context context) {
         this.context = context;
@@ -74,6 +80,8 @@ public class LearningObjectAdapter extends RecyclerView.Adapter<LearningObjectAd
         View view = LayoutInflater.from(context).inflate(R.layout.learning_object_item, parent, false);
 
         mUserDAO = new UserDAO(context);
+        mUserLoDAO = new UserLoDAO(context);
+        mAuth = FirebaseAuth.getInstance();
 
         return new LearningObjectViewHolder(view);
     }
@@ -93,6 +101,22 @@ public class LearningObjectAdapter extends RecyclerView.Adapter<LearningObjectAd
             holder.imageLo.setImageResource(R.drawable.avt_profile);
         }
         User user = mUserDAO.getUserByLoIdAndStatus(learningObject.getId(), UserLoStatusEnum.CREATE_LO.name());
+        User currUser = mUserDAO.getUserByAccountId(mAuth.getCurrentUser().getUid());
+        UserLo userLo = mUserLoDAO.getUserLoByUserIdAndLoIdAndStatus(currUser.getId(), learningObject.getId(), UserLoStatusEnum.COMPLETE.name());
+        if (userLo.getId() != null) {
+            Integer sumExp = learningObject.getQuizzes().size() * 100;
+            Float aFloat = userLo.getCurrentExp().floatValue() / sumExp.floatValue();
+
+            Float fPercent = aFloat*100;
+            Integer percent = fPercent.intValue();
+            holder.percentTrue.setText(percent + "% True");
+
+            if (percent == 100) {
+                holder.percentTrue.setTextColor(Color.parseColor("#1AFF00"));
+            } else {
+                holder.percentTrue.setTextColor(Color.parseColor("#FF0000"));
+            }
+        }
         holder.numQuestion.setText("Number of questions: " + learningObject.getQuizzes().size());
         holder.createdBy.setText("Created by: " + user.getName());
     }
@@ -104,7 +128,7 @@ public class LearningObjectAdapter extends RecyclerView.Adapter<LearningObjectAd
 
     public class LearningObjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView nameLo, numQuestion, createdBy, categoryLo;
+        private TextView nameLo, numQuestion, createdBy, categoryLo, percentTrue;
         private ImageView imageLo;
 
         public LearningObjectViewHolder(@NonNull View view) {
@@ -114,6 +138,7 @@ public class LearningObjectAdapter extends RecyclerView.Adapter<LearningObjectAd
             createdBy = view.findViewById(R.id.createdBy);
             categoryLo = view.findViewById(R.id.categoryLo);
             imageLo = view.findViewById(R.id.imageLo);
+            percentTrue = view.findViewById(R.id.percentTrue);
 
             view.setOnClickListener(this);
         }
