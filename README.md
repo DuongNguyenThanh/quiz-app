@@ -5,7 +5,7 @@ Database - SQLite:
 
 <img src="TKHT-Android-AppQuiz.png"/>
 
-Chức năng cơ bản:
+Basic function:
 - Login, Register, Forgot Password (using Firebase)
 - CRUD Quiz
 - Show Category, Learning Object
