@@ -2,6 +2,7 @@
 Quiz app android using Java
 
 Database - SQLite:
+
 <img src="TKHT-Android-AppQuiz.png"/>
 
 Chức năng cơ bản:
@@ -14,3 +15,4 @@ Chức năng cơ bản:
 - Update User Profile
 - Upgrade User achievement 
 - Do Quiz (random quiz and answer)
+- Show result
